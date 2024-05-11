@@ -28,3 +28,6 @@
   <li><b>templates</b> : html dosyaları için</li>
   <li><b>media</b> : user media için</li>
 </ul>
+
+<h2>Veri tabanı</h2>
+<img width="946px" alt="Screenshot 2024-05-11 at 19 46 16" src="https://github.com/turgay2317/bmt310-project/assets/90829101/ee233cf5-23c6-448b-a86e-95c0b7391f90">
