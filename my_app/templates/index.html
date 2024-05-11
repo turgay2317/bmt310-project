@@ -28,8 +28,8 @@
         <h3 class="text1"> YAPAY ZEKA DESTEKLİ E-ÖĞRENME SİSTEMİ</h3>
         <nav>
             <ul>
-                <li><a href="giris.html">Giriş Yap</a></li>
-                <li><a href="kayit.html">Kayıt Ol</a></li>
+                <li><a href="giris">Giriş Yap</a></li>
+                <li><a href="kayit">Kayıt Ol</a></li>
                 <li>
                     <div class="language">
                         <select>
@@ -71,74 +71,36 @@
 <hr>  <br> <br> <br>
   <div class="column" >
 
+{%for paket in paketler %}
 
     <div class="container containerCstm">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title containerCstm-text">Giriş Paketi </h5>
+                        <h5 class="card-title containerCstm-text">{{ paket.paketAdi }}</h5>
                         <p class="card-text containerCstm-text-info">
-                            -Maksimum 2000 kullanıcı 
+                            -Maksimum {{paket.paketMaxKullanici}} kullanıcı 
                             <br>
-                            -Yıllık 12.000 TL
+                            -Yıllık {{paket.paketFiyat}} TL
                             <br>
-                            -İşletmeler ve ortaöğretim kurumları için uygundur.
+                            -{{paket.paketAciklama}}
                             </p>
-                        <a href="kayit.html" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
+                        <a href="kayit" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
                     </div>
                 </div>
             </div>
         </div>
         </div>
     <br> 
-        <div class="container containerCstm">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title containerCstm-text">Temel Yükseköğretim Paketi</h5>
-                            <p class="card-text containerCstm-text-info">
-                                - 7000 kullanıcı 
-                                <br>
-                                - Yıllık 36.000 TL
-                            </p>
-                            <a href="kayit.html" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <br>
-            <div class="container containerCstm ">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title containerCstm-text">Gelişmiş Yükseköğretim Paketi</h5>
-                                <p class="card-text containerCstm-text-info">
-                                    - 80.000 kullanıcı
-                                    <br>
-                                    - Yıllık 250.000 TL
-                                </p>
-                                <a href="kayit.html" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
+    {% endfor %}
+              
     
      
     
 				</div>
 
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<b style="color:white;">TEST</b>
-						</div>
-					</div>
-				</div>
+		
 				
         
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

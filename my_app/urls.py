@@ -9,4 +9,10 @@ urlpatterns = [
     
     path("index",views.index),
     path("giris",views.giris),
+    path("kayit",views.kayit),
+    path("kurum",views.kurum),
+    path("kullanici",views.kullanici),
+    path("egitmen",views.egitmen),
+    path("egitmenDosyaYukle",views.egitmenDosyaYukle),
+    path("egitmenSinifEkle",views.egitmenSinifEkle),
 ]
