@@ -3,7 +3,7 @@
   }
   
   .table th {
-    background-color: #6c757d; /* Başlık arka plan rengi */
+    background-color: #0056b3;
     color: #ffffff; /* Başlık metin rengi */
   }
   
@@ -25,9 +25,7 @@
   }
   
   .table-container {
-    float: right; 
     margin-top: 50px;
-   margin-right: 100px;
   }
   
   .navbar-custom {
@@ -82,11 +80,9 @@
     display: flex; 
     flex-direction: column; 
     gap: 20px; 
-    margin-top: 100px;
-    margin-left: 100px;
+    margin-top: 50px;
   }
   .card {
-    width: 600px;
     height: fit-content;
   }
   .btn-custom {
