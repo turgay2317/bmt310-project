@@ -1,0 +1,78 @@
+     
+        .navbar-custom {
+            background-color: rgb(46, 46, 112);
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color: #ffffff;
+        }
+
+        .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .class-content {
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            display: none; /* Initially hide all class content */
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .listCustom {
+    list-style: none;
+    padding: 0;
+}
+
+.listCustom li {
+    margin-bottom: 10px;
+}
+
+.listCustom li a {
+    display: block;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    color: #212529;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.listCustom li a:hover {
+    background-color: #e9ecef;
+    text-decoration: none;
+}

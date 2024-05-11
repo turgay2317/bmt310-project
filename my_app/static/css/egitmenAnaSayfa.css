@@ -1,0 +1,123 @@
+.navbar-custom {
+    background-color: #2e2e70; 
+  }
+  .navbar-custom .navbar-brand,
+  .navbar-custom .navbar-text,
+  .navbar-custom .nav-link {
+    color: #ffffff; 
+  }
+
+  .navbar-custom .nav-item.active .nav-link,
+  .navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff; 
+    background-color: rgba(255, 255, 255, 0.1); 
+  }
+
+  .dropdown-menu1 {
+    background-color: #f8f9fa; 
+    border: none; 
+  }
+
+  .dropdown-menu1 .dropdown-item {
+    color: #212529; 
+  }
+
+  .dropdown-menu1 .dropdown-item:hover {
+    background-color: #e9ecef; 
+  }
+
+  .container {
+    margin-top: 50px;
+  }
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .btn-group {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-custom {
+    width: 150px; 
+    height: 50px; 
+    font-size: 20px; 
+    margin-left: 20px;
+    background-color: #0056b3;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+  }
+  .btn-custom:hover {
+    background-color: #004080;
+  }
+
+  .btn-custom02 {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+  }
+  .btn-custom02:hover {
+    opacity: 0.8;
+  }
+  .containerSize {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .list-group-item {
+    border: none;
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  .list-group-item:hover {
+    background-color: #e9ecef;
+  }
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 9999;
+  }
+  .list-item {
+      cursor: pointer;
+  }
+  .dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+  width: 500px; 
+  height: 150px; 
+  overflow-y: auto; 
+}
+  .list-item.active .dropdown-menu {
+      display: block;
+  }
+
+  .card:hover {
+  background-color: #e9ecef; 
+}
+.btn-custom {
+      
+     
+     background-color: #0056b3;
+      
+  }
+  .text-cstm{
+     color: #fff;
+     padding: 10px;
+     white-space: nowrap;
+  }
+
