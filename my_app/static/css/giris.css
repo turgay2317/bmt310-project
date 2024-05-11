@@ -10,13 +10,14 @@ body {
 .form-container {
    
     margin: 0 auto;
-    margin-top: 200px;
+   width: 900px;
+   height: 380px;
+   margin-top: 150px;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    width: 850px; 
-  height: 550px;
+  
 }
 
 .form-container h3 {
@@ -52,6 +53,7 @@ body {
 }
 
 .nav-tabs .nav-link {
+    margin-left: 50px;
     color: #fff;
     font-weight: bold;
     display:inline-block;
@@ -68,6 +70,7 @@ body {
 
 
 .custom-flex {
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
