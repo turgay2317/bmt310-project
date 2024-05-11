@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Navbar</title>
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        
+        .navbar-custom {
+            background-color: rgb(46, 46, 112);
+        }
+
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color: #ffffff;
+        }
+
+        .navbar-custom .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .class-content {
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            display: none; /* Initially hide all class content */
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .listCustom {
+    list-style: none;
+    padding: 0;
+}
+
+.listCustom li {
+    margin-bottom: 10px;
+}
+
+.listCustom li a {
+    display: block;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    color: #212529;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.listCustom li a:hover {
+    background-color: #e9ecef;
+    text-decoration: none;
+}
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">Kullanıcı Ana Sayfa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Sınıflar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           Kullanıcı
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li><a class="dropdown-item" href="#">Ayarlar</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="giris.html">Çıkış yap</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br> <br>  <br> <br>
+
+    <div class="container">
+        <h1 class="text-center mb-4">Sınıflar</h1>
+        <ul class="list-group  listCustom">
+            <li class="list-group-item"><a href="#matematik" class="class-link text-decoration-none text-dark" onclick="showClassContent('matematik')">Matematik</a></li>
+            <li class="list-group-item"><a href="#fen" class="class-link text-decoration-none text-dark" onclick="showClassContent('fen')">Fen Bilimleri</a></li>
+            <li class="list-group-item"><a href="#biyoloji" class="class-link text-decoration-none text-dark" onclick="showClassContent('biyoloji')">Biyoloji</a></li>
+            <li class="list-group-item"><a href="#tarih" class="class-link text-decoration-none text-dark" onclick="showClassContent('tarih')">Tarih</a></li>
+            <li class="list-group-item"><a href="#kimya" class="class-link text-decoration-none text-dark" onclick="showClassContent('kimya')">Kimya</a></li>
+            <li class="list-group-item"><a href="#fizik" class="class-link text-decoration-none text-dark" onclick="showClassContent('fizik')">Fizik</a></li>
+        </ul>
+    
+        <div class="class-content mt-4" id="matematik-content">
+            <h2>Matematik İçeriği</h2>
+            <div class="container video-container" onclick="playVideo('matematikVideo')">
+                <video class="video" id="matematikVideo" controls>
+                    <source src="images/videoplayback.mp4" type="video/mp4">
+                   
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    
+        <div class="class-content mt-4" id="fen-content">
+            <h2>Fen Bilimleri İçeriği</h2>
+            <div class="container video-container" onclick="playVideo('fenVideo')">
+                <video class="video" id="fenVideo" controls>
+                    <source src="images/videoplayback.mp4" type="video/mp4">
+                    
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    
+        <div class="class-content mt-4" id="biyoloji-content">
+            <h2>Biyoloji İçeriği</h2>
+            <div class="container video-container" onclick="playVideo('biyolojiVideo')">
+                <video class="video" id="biyolojiVideo" controls>
+                    <source src="images/Chipi chipi chapa chapa cat.mp4" type="video/mp4">
+                    <!-- Fallback for browsers that don't support HTML5 video -->
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    
+        <div class="class-content mt-4" id="tarih-content">
+            <h2>Tarih İçeriği</h2>
+            <div class="container video-container" onclick="playVideo('tarihVideo')">
+                <video class="video" id="tarihVideo" controls>
+                    <source src="images/videoplayback.mp4" type="video/mp4">
+                    <!-- Fallback for browsers that don't support HTML5 video -->
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    
+        <div class="class-content mt-4" id="kimya-content">
+            <h2>Kimya İçeriği</h2>
+            <div class="container video-container" onclick="playVideo('kimyaVideo')">
+                <video class="video" id="kimyaVideo" controls>
+                    <source src="images/videoplayback.mp4" type="video/mp4">
+                    <!-- Fallback for browsers that don't support HTML5 video -->
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    
+        <div class="class-content mt-4" id="fizik-content">
+            <h2>Fizik İçeriği</h2>
+            <div class="container video-container" onclick="playVideo('fizikVideo')">
+                <video class="video" id="fizikVideo" controls>
+                    <source src="images/videoplayback.mp4" type="video/mp4">
+                    <!-- Fallback for browsers that don't support HTML5 video -->
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    
+        <!-- Diğer sınıf içerikleri buraya eklenebilir -->
+    
+    </div>
+    
+
+    <script>
+        function showClassContent(classId) {
+            // Hide all class content first
+            document.querySelectorAll('.class-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Show the selected class content
+            document.getElementById(classId + '-content').style.display = 'block';
+        }
+
+        function playVideo(videoId) {
+            var video = document.getElementById(videoId);
+            video.play();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

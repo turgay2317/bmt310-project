@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Olma Ekranı</title>
+    <!-- Bootstrap CSS dosyası -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color:rgb(46, 46, 112) ;
+            color: #fff;
+            text-align: center;
+        }
+        .btn-custom {
+        width: 200px; 
+        height: 50px; 
+        font-size: 20px; 
+        margin-left: 150px;
+       background-color:rgb(46, 46, 112) ;
+        
+    }
+    .imgCustom{
+        margin-left: 150px;
+    }
+    body {
+            background-image: url("images/backgrimage02.jpg");
+            background-size:cover; 
+            background-position-x: left; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed;
+        }
+
+        .radioButtonCustom{
+            background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 50%; 
+    width: 30px;
+    height: 30px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Kayıt Ol</h3>
+                    </div>
+                    <div class="card-body row">
+                      
+                        <form>
+                            <div class="form-group">
+                                <label for="firstName">Ad</label>
+                                <input type="text" id="firstName" class="form-control" placeholder="Adınızı girin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Soyad</label>
+                                <input type="text" id="lastName" class="form-control" placeholder="Soyadınızı girin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="isletmeAdi">İşletme adınız</label>
+                                <input type="text" id="isletmeAdi" class="form-control" placeholder="İşletme adınızı girin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="webSitesi">Websitesi</label>
+                                <input type="url" id="webSitesi" class="form-control" placeholder="Websitesi adresinizi girin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-posta</label>
+                                <input type="email" id="email" class="form-control" placeholder="E-posta adresinizi girin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Şifre</label>
+                                <input type="password" id="password" class="form-control" placeholder="Şifrenizi girin" required>
+                                 <br>
+                                <div class="radio-group">
+                                    <input type="radio" id="giris-paketi" name="paket" value="giris-paketi">
+                                    <label for="giris-paketi">Giriş Paketi</label><br>
+                                </div>
+                                
+                                <div class="radio-group">
+                                    <input type="radio" id="yuksek-egitim-paketi" name="paket" value="yuksek-egitim-paketi">
+                                    <label for="yuksek-egitim-paketi">Temel Yüksek Öğretim Paketi</label><br>
+                                </div>
+                                
+                                <div class="radio-group">
+                                    <input type="radio" id="gelismis-paket" name="paket" value="gelismis-paket">
+                                    <label for="gelismis-paket">Gelişmiş Yüksek Öğretim Paketi</label><br>
+                                </div>
+                                <input type="checkbox" id="myCheckbox" name="myCheckbox" value="checkboxValue">
+                                 <label for="myCheckbox">Kullanım sözleşmesini ve Gizlilik politikasını kabul ediyorum</label>
+
+                            </div>
+                            <a href="giris.html" class="btn btn-primary btn-block btn-custom">Giriş</a>
+
+                            <p>Hesabınız var mı? <a href="giris.html">Giriş yapın</a></p>
+                            
+                              
+                            
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6 order-md-5">
+                <div class="card mb-5" style="max-width: 340px;">
+                    <div class="row g-0">
+                        <div class="col-md-6 ">
+                            <img src="images/ai-cloud-concept-with-robot-arm.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">AMACIMIZ</h5>
+                                <p class="card-text">Öğrencilerin öğrenimini pekiştirmek için video şeklindeki eğitim materyallerini kullanarak altyazı desteği sağlanması, altyazılardan tüm videonun transkriptinin oluşturulması ve konunun eğitimsel anlamda özetlenmesi amaçlanmıştır.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+    </html>
+    
