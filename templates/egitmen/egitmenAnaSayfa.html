@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sınıf Listesi</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    .navbar-custom {
+      background-color: #2e2e70; 
+    }
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-text,
+    .navbar-custom .nav-link {
+      color: #ffffff; 
+    }
+
+    .navbar-custom .nav-item.active .nav-link,
+    .navbar-custom .nav-item:hover .nav-link {
+      color: #ffffff; 
+      background-color: rgba(255, 255, 255, 0.1); 
+    }
+
+    .dropdown-menu1 {
+      background-color: #f8f9fa; 
+      border: none; 
+    }
+
+    .dropdown-menu1 .dropdown-item {
+      color: #212529; 
+    }
+
+    .dropdown-menu1 .dropdown-item:hover {
+      background-color: #e9ecef; 
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-custom {
+      width: 150px; 
+      height: 50px; 
+      font-size: 20px; 
+      margin-left: 20px;
+      background-color: #0056b3;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+    }
+    .btn-custom:hover {
+      background-color: #004080;
+    }
+
+    .btn-custom02 {
+      width: 100px;
+      height: 40px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+    .btn-custom02:hover {
+      opacity: 0.8;
+    }
+    .containerSize {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .list-group-item {
+      border: none;
+      background-color: #f8f9fa;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .list-group-item:hover {
+      background-color: #e9ecef;
+    }
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: none;
+      z-index: 9999;
+    }
+    .list-item {
+        cursor: pointer;
+    }
+    .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    width: 500px; 
+    height: 150px; 
+    overflow-y: auto; 
+}
+    .list-item.active .dropdown-menu {
+        display: block;
+    }
+
+    .card:hover {
+    background-color: #e9ecef; 
+  }
+  .btn-custom {
+        
+       
+       background-color: #0056b3;
+        
+    }
+    .text-cstm{
+       color: #fff;
+       padding: 10px;
+       white-space: nowrap;
+    }
+ 
+  
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand textGCustom" style="font-size: 35px; font-weight: bold;" href="#">Eğitmen Ana Sayfa</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Sınıflar</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Eğitmen
+            </a>
+            <ul class="dropdown-menu dropdown-menu1" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="#">Profil</a></li>
+              <li><a class="dropdown-item" href="#">Ayarlar</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="giris.html">Çıkış yap</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div style="margin-left: 80px;">
+    <br> <br>
+    <h1>Sınıf Listesi</h1>
+    
+    <br>
+   
+    <div class=" button" >
+      <a href="egitmenSinifEkle.html" class="btn btn-primary btn-block btn-custom">Sınıf Ekle</a>
+    <br>
+  
+  
+   </div>
+  <br><br> 
+  <div class="card" style="min-height: 100vh;">
+  
+    <div class="card" style="margin-left: 100px; margin-right: 150px;">
+      <div class="card-body">
+        <h5 class="card-title" style="font-size: 25px; font-weight: bold;">Fizik Sınıfı</h5>
+       
+        <p class="card-text">Sınıf bilgisi buraya gelir.</p>
+  
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown btn-custom" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sınıf içeriği
+              <button class="btn btn-info btn-custom02 btn-select" style="margin-left: 15px;">Seç</button>
+              <button class="btn btn-danger btn-custom02 btn-delete">Sil</button>
+              <a href="egitmenDosyaYukle.html" class="btn btn-success btn-custom02 btn-content"> İçerik Ekle</a>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="container" style="width: 300px;">
+              <h5 class="dropdown-header" style="font-size: 25px; font-weight: 500;">Öğrenci Tablosu</h5>
+              <div class="row">
+                <div class="col">
+                  <a class="dropdown-item" href="#">
+                    <div class="button btn-danger btn-custom02"> 
+                      <a href="x" class=" text-cstm" >Öğrenci Sil</a>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <a class="dropdown-item" href="#">
+                <div class="button  btn-success btn-custom02 btn-content"> 
+                  <a href="x" class="text-cstm">Öğrenci Ekle</a>
+                </div>
+              </a>
+                
+              </div>
+              <hr>
+              <p class="dropdown-item-text">Öğrenci Bilgiler:</p>
+              <div class="row">
+                <div class="col">
+                  <img src="images/turgayceylan.jpg" alt="Öğrenci Fotoğrafı" style="width: 100px; height: 100px;">
+                </div>
+                <div class="col">
+                  <p>Öğrenci Adı: Turgay Ceylan</p>
+                  <p>Öğrenci No: 123456</p>
+                  <p>Doğum Tarihi: 01/01/2000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+    <br><br>
+    <div class="card" style="min-height: 100vh;">
+  
+      <div class="card" style="margin-left: 100px; margin-right: 150px;">
+        <div class="card-body">
+          <h5 class="card-title" style="font-size: 25px; font-weight: bold;">Kimya Sınıfı</h5>
+         
+          <p class="card-text">Sınıf bilgisi buraya gelir.</p>
+    
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown btn-custom" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sınıf içeriği
+                <button class="btn btn-info btn-custom02 btn-select" style="margin-left: 15px;">Seç</button>
+                <button class="btn btn-danger btn-custom02 btn-delete">Sil</button>
+                <a href="egitmenDosyaYukle.html" class="btn btn-success btn-custom02 btn-content"> İçerik Ekle</a>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Seçenek 1</a>
+              <a class="dropdown-item" href="#">Seçenek 2</a>
+              <a class="dropdown-item" href="#">Seçenek 3</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+      <div class="card" style="min-height: 100vh;">
+  
+        <div class="card" style="margin-left: 100px; margin-right: 150px;">
+          <div class="card-body">
+            <h5 class="card-title" style="font-size: 25px; font-weight: bold;">Matematik Sınıfı</h5>
+           
+            <p class="card-text">Sınıf bilgisi buraya gelir.</p>
+      
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown btn-custom" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sınıf içeriği
+                  <button class="btn btn-info btn-custom02 btn-select" style="margin-left: 15px;">Seç</button>
+                  <button class="btn btn-danger btn-custom02 btn-delete">Sil</button>
+                  <a href="egitmenDosyaYukle.html" class="btn btn-success btn-custom02 btn-content"> İçerik Ekle</a>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Seçenek 1</a>
+                <a class="dropdown-item" href="#">Seçenek 2</a>
+                <a class="dropdown-item" href="#">Seçenek 3</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <div class="card" style="min-height: 100vh;">
+  
+          <div class="card" style="margin-left: 100px; margin-right: 150px;">
+            <div class="card-body">
+              <h5 class="card-title" style="font-size: 25px; font-weight: bold;">Biyoloji Sınıfı</h5>
+             
+              <p class="card-text">Sınıf bilgisi buraya gelir.</p>
+        
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown btn-custom" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sınıf içeriği
+                    <button class="btn btn-info btn-custom02 btn-select" style="margin-left: 15px;">Seç</button>
+                    <button class="btn btn-danger btn-custom02 btn-delete">Sil</button>
+                    <a href="egitmenDosyaYukle.html" class="btn btn-success btn-custom02 btn-content"> İçerik Ekle</a>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Seçenek 1</a>
+                  <a class="dropdown-item" href="#">Seçenek 2</a>
+                  <a class="dropdown-item" href="#">Seçenek 3</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <div class="card" style="min-height: 100vh;">
+  
+            <div class="card" style="margin-left: 100px; margin-right: 150px;">
+              <div class="card-body">
+                <h5 class="card-title" style="font-size: 25px; font-weight: bold;">Coğrafya Sınıfı</h5>
+               
+                <p class="card-text">Sınıf bilgisi buraya gelir.</p>
+          
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown btn-custom" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sınıf içeriği
+                      <button class="btn btn-info btn-custom02 btn-select" style="margin-left: 15px;">Seç</button>
+                      <button class="btn btn-danger btn-custom02 btn-delete">Sil</button>
+                      <a href="egitmenDosyaYukle.html" class="btn btn-success btn-custom02 btn-content"> İçerik Ekle</a>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Seçenek 1</a>
+                    <a class="dropdown-item" href="#">Seçenek 2</a>
+                    <a class="dropdown-item" href="#">Seçenek 3</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br><br>
+           
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+ 
+  <script>
+    $(document).ready(function() {
+     
+      $('.btn-select').click(function() {
+        $('.notification').text('Sınıf seçildi.').fadeIn().delay(2000).fadeOut();
+      });
+
+     
+      $('.btn-delete').click(function() {
+        if (confirm('Silmek istediğinizden emin misiniz?')) {
+          $('.notification').text('Sınıf silindi.').fadeIn().delay(2000).fadeOut();
+         
+        }
+      });
+    });
+  </script>
+
+
+<script>
+  $(document).ready(function() {
+    $('.list-item span').click(function(event) {
+      event.stopPropagation(); // Diğer etkileşimleri engelle
+      
+      var dropdownMenu = $(this).siblings('.dropdown-menu');
+      
+      if (dropdownMenu.hasClass('show')) {
+        dropdownMenu.removeClass('show');
+      } else {
+        $('.dropdown-menu').removeClass('show'); // Tüm açık dropdown-menuleri kapat
+        dropdownMenu.addClass('show');
+      }
+    });
+
+    // Dropdown menü dışında bir yere tıklandığında açık menüyü kapat
+    $(document).click(function() {
+      $('.dropdown-menu').removeClass('show');
+    });
+  });
+</script>
+
+
+
+
+
+ 
+  <div class="notification"></div>
+
+</body>
+</html>

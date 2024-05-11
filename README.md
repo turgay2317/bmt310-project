@@ -5,8 +5,8 @@
   </li>
   <li>
     <p>Aktivite etme</p>
-    <p>* Windows : eogrenmesistemi\Scripts\activate.bat</p>
-    <p>MacOS : source eogrenmesistemi/Scripts/activate</p>
+    <p>* Windows : myenv\Scripts\activate.bat</p>
+    <p>MacOS : source myenv/Scripts/activate</p>
   </li>
   <li>
     pip install django==3.2.9

@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ana Sayfa</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</head>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+<style>
+     .card {
+        margin-bottom: 20px;
+        
+    }
+     body {
+            background-image: url("images/backgrimage02.jpg");
+            background-size:cover; 
+            background-position-x: left; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px); 
+        }
+    ul{
+        list-style-type: none;
+    }
+    ul li:hover{
+        background-color:rgb(46, 46, 112);
+    }
+    .imaj1{
+        display: block; 
+       margin: 0 auto;
+       margin-top: 200px;
+    }
+    .text1{
+        font-weight: bold;
+        font-size:xx-large;
+        text-align: right;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+   
+    .text2{
+        position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(10, 10, 156);
+    font-size: 44px;
+    font-weight: bold;
+   
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+
+    }
+    .slider-content {
+            position: relative;
+            height: 700px;
+            width: 1500px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url('images/robot-handshake-human-background-futuristic-digital-age.jpg');
+           margin-bottom: 50px;
+            background-size: cover;
+            background-position: center;
+            margin-top: 50px;
+            text-align: left;
+           
+            margin-right: 350px;
+        }
+
+        .slider-content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .slider-content h1 {
+            font-size: 3rem; 
+            margin-bottom: 20px;
+        }
+
+        .slider-content button {
+            padding: 10px 20px;
+            font-size: 1.5rem; 
+        }
+        .btn-custom {
+        width: 200px; 
+        height: 50px; 
+        font-size: 20px; 
+        margin-left: 150px;
+       background-color:rgb(46, 46, 112) ;
+       margin-right: 1000px;
+       margin-top: 500px;
+    }
+    .cardCustom {
+    position: absolute;
+    top: 250px;
+    right: 520px;
+    z-index: 1; 
+    text-decoration: dashed;
+}
+.btn-custom2{
+    background-color:rgb(46, 46, 112) ;
+    width: 180px;
+    height: 50px;
+    margin-bottom: 10px;
+
+
+}
+.text3{
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.containerCstm{
+   
+  background-color:rgb(26, 69, 150);
+  color: #1c2eb5;
+    height: 250px;
+    color-scheme:#1c2eb5;
+
+}
+.containerCstm-text{
+    font-size: 35px;
+    font-weight: bold;
+}
+.containerCstm-text-info{
+    font-size: 20px;
+}
+.btn-text{
+    size: 45px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.corusel-text{
+    font-size: 25px;
+}
+   
+</style>
+<body>
+    <header>
+       
+        <div class="logo" >
+            <img src="images/logo-1.png" alt="Logo">
+        </div>
+        <h3 class="text1"> YAPAY ZEKA DESTEKLİ E-ÖĞRENME SİSTEMİ</h3>
+        <nav>
+            <ul>
+                <li><a href="giris.html">Giriş Yap</a></li>
+                <li><a href="kayit.html">Kayıt Ol</a></li>
+                <li>
+                    <div class="language">
+                        <select>
+                            <option value="tr">Türkçe</option>
+                            <option value="en">English</option>
+                            
+                        </select>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="row" >
+
+  
+    <div class="container" >
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" >
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+               
+                <div class="slider-content">
+                    <div class="card">
+                    
+                        <div class="card-body cardCustom">
+                          <h2 class="card-title text3">MERHABA</h2>
+                         
+                          <a href="giris.html" class="btn btn-primary btn-custom2 corusel-text ">Giriş Yap</a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>
+<hr>  <br> <br> <br>
+  <div class="column" >
+
+
+    <div class="container containerCstm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title containerCstm-text">Giriş Paketi </h5>
+                        <p class="card-text containerCstm-text-info">
+                            -Maksimum 2000 kullanıcı 
+                            <br>
+                            -Yıllık 12.000 TL
+                            <br>
+                            -İşletmeler ve ortaöğretim kurumları için uygundur.
+                            </p>
+                        <a href="kayit.html" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    <br> 
+        <div class="container containerCstm">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title containerCstm-text">Temel Yükseköğretim Paketi</h5>
+                            <p class="card-text containerCstm-text-info">
+                                - 7000 kullanıcı 
+                                <br>
+                                - Yıllık 36.000 TL
+                            </p>
+                            <a href="kayit.html" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <br>
+            <div class="container containerCstm ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title containerCstm-text">Gelişmiş Yükseköğretim Paketi</h5>
+                                <p class="card-text containerCstm-text-info">
+                                    - 80.000 kullanıcı
+                                    <br>
+                                    - Yıllık 250.000 TL
+                                </p>
+                                <a href="kayit.html" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+    
+     
+    
+  
+        
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+</body>
+</html>
