@@ -23,10 +23,7 @@
                     <div class="card-body row">
                       
                         <form method="post">
-                            <div class="form-group">
-                                <label for="firstName">Ad Soyad</label>
-                                <input type="text" id="firstName" class="form-control" name="ad_soyad" placeholder=" Tam adınızı girin" required>
-                            </div>
+							{% csrf_token %}
                             
                             <div class="form-group">
                                 <label for="isletmeAdi">İşletme adınız</label>
@@ -45,20 +42,20 @@
                                 <input type="password" id="password" class="form-control" name="sifre" placeholder="Şifrenizi girin" required>
                                  <br>
                                 <div class="radio-group">
-                                    <input type="radio" id="giris-paketi" name="paket" value="giris-paketi">
+                                    <input type="radio" id="giris-paketi" name="paket" value="1" required>
                                     <label for="giris-paketi">Giriş Paketi</label><br>
                                 </div>
                                 
                                 <div class="radio-group">
-                                    <input type="radio" id="yuksek-egitim-paketi" name="paket" value="yuksek-egitim-paketi">
+                                    <input type="radio" id="yuksek-egitim-paketi" name="paket" value="2" required>
                                     <label for="yuksek-egitim-paketi">Temel Yüksek Öğretim Paketi</label><br>
                                 </div>
                                 
                                 <div class="radio-group">
-                                    <input type="radio" id="gelismis-paket" name="paket" value="gelismis-paket">
+                                    <input type="radio" id="gelismis-paket" name="paket" value="3" required>
                                     <label for="gelismis-paket">Gelişmiş Yüksek Öğretim Paketi</label><br>
                                 </div>
-                                <input type="checkbox" id="myCheckbox" name="sozlesme" value="checkboxValue">
+                                <input type="checkbox" required id="myCheckbox" name="sozlesme" value="checkboxValue">
                                  <label for="myCheckbox">Kullanım sözleşmesini ve Gizlilik politikasını kabul ediyorum.</label>
 
                             </div>

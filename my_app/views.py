@@ -1,9 +1,12 @@
 from django.http.response import HttpResponse
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.staticfiles import finders
 from django.http import HttpResponseNotFound
 from my_app.models import Paketler
+from .forms import KayitFormu
+from .models import Kurumlar
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -19,13 +22,28 @@ def kayit(request):
     if request.method == 'POST':
         form = KayitFormu(request.POST)
         if form.is_valid():
-            ad_soyad = form.cleaned_data['ad_soyad']
             isletme_adi = form.cleaned_data['isletme_adi']
             web_sitesi = form.cleaned_data['web_sitesi']
             eposta = form.cleaned_data['eposta']
             sifre = form.cleaned_data['sifre']
-            paket = form.cleaned_data['paket']
             sozlesme = form.cleaned_data['sozlesme']
+            paket = form.cleaned_data['paket']
+            
+            try:
+                secilen_paket = Paketler.objects.get(paketID=paket)
+                Kurumlar.objects.create(
+                    kurumAdi=isletme_adi,
+                    kurumWebsite=web_sitesi,
+                    kurumEposta=eposta,
+                    kurumSifre=sifre,
+                    kurumPaket=secilen_paket,
+                    kurumPaketSonTarih=datetime.now().date()
+                )
+                return redirect("giris")
+            except Paketler.DoesNotExist:
+                print("Hata")
+        else:
+            print(form.errors)
 
     return render(request, "kayit.html")
 

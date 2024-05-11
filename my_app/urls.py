@@ -8,7 +8,7 @@ urlpatterns = [
     path('static/<path:path>', views.static_view),
     
     path("index",views.index),
-    path("giris",views.giris),
+    path("giris",views.giris, name="giris"),
     path("kayit",views.kayit),
     path("kurum",views.kurum),
     path("kullanici",views.kullanici),
