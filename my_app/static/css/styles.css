@@ -45,7 +45,6 @@ nav ul li a {
     width: 100%;
     height: 400px;
     overflow: hidden;
-    margin-left: 150px;
 }
 
 .slide {
@@ -54,13 +53,11 @@ nav ul li a {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 150px;
 }
 
 .slide img {
     max-width: 100%;
     height: auto;
-    margin-left: 250px;
 }
 
 footer {

@@ -61,9 +61,7 @@
     .slider-content {
             position: relative;
             height: 700px;
-            width: 1500px; 
-            display: flex;
-            justify-content: center;
+            width: 100%; 
             align-items: center;
             text-align: center;
             background-image: url("{% static 'images/robot-handshake-human-background-futuristic-digital-age.jpg' %}");
@@ -73,7 +71,6 @@
             margin-top: 50px;
             text-align: left;
            
-            margin-right: 350px;
         }
 
         .slider-content-overlay {
@@ -103,7 +100,6 @@
         width: 200px; 
         height: 50px; 
         font-size: 20px; 
-        margin-left: 150px;
        background-color:rgb(46, 46, 112) ;
        margin-right: 1000px;
        margin-top: 500px;
@@ -152,6 +148,7 @@
 .corusel-text{
     font-size: 25px;
 }
+
    
 </style>
 <body>
@@ -177,29 +174,31 @@
             </ul>
         </nav>
     </header>
-    <div class="row" >
 
   
     <div class="container" >
-
-    <div id="carouselExampleSlidesOnly" class="carousel slide" >
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-               
-                <div class="slider-content">
-                    <div class="card">
-                    
-                        <div class="card-body cardCustom">
-                          <h2 class="card-title text3">MERHABA</h2>
-                         
-                          <a href="giris.html" class="btn btn-primary btn-custom2 corusel-text ">Giriş Yap</a>
-                        </div>
-                      </div>
-                </div>
-            </div>
-        
-        </div>
-    </div>
+		<div class="row d-flex align-items-center justify-content-center">
+			<div class="col-md-12">
+				<div id="carouselExampleSlidesOnly" class="carousel slide" >
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+						   
+							<div class="slider-content">
+								<div class="card">
+								
+									<div class="card-body cardCustom">
+									  <h2 class="card-title text3">MERHABA</h2>
+									 
+									  <a href="giris.html" class="btn btn-primary btn-custom2 corusel-text ">Giriş Yap</a>
+									</div>
+								  </div>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+		</div>
 </div>
 <hr>  <br> <br> <br>
   <div class="column" >
@@ -263,7 +262,16 @@
     
      
     
-  
+				</div>
+
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<b style="color:white;">TEST</b>
+						</div>
+					</div>
+				</div>
+				
         
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
