@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -6,18 +7,8 @@
   <title>Ders Video Yükle</title>
   
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
- 
-  <style>
-    .container {
-      margin-top: 50px;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .btn-custom {
-      width: 150px;
-    }
-  </style>
+  <link rel="stylesheet" href="{% static 'css/egitmenDosyaEkle.css' %}">
+  
 </head>
 <body>
   <div class="container">

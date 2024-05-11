@@ -1,0 +1,40 @@
+body {
+    background-color: #f8f9fa;
+}
+.container {
+    margin-top: 50px;
+}
+.card {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.card-header {
+    background-color:rgb(46, 46, 112) ;
+    color: #fff;
+    text-align: center;
+}
+.btn-custom {
+width: 200px; 
+height: 50px; 
+font-size: 20px; 
+margin-left: 150px;
+background-color:rgb(46, 46, 112) ;
+
+}
+.imgCustom{
+margin-left: 150px;
+}
+body {
+    background-image: url("../images/backgrimage02.jpg ");
+    background-size:cover; 
+    background-position-x: left; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+}
+
+.radioButtonCustom{
+    background-color: #fff;
+border: 2px solid #333;
+border-radius: 50%; 
+width: 30px;
+height: 30px;
+    }
