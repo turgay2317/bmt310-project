@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@
         margin-left: 150px;
     }
     body {
-            background-image: url("images/backgrimage02.jpg");
+            background-image: url("{% static 'images/backgrimage02.jpg' %}");
             background-size:cover; 
             background-position-x: left; 
             background-repeat: no-repeat; 
@@ -116,7 +117,7 @@
                 <div class="card mb-5" style="max-width: 340px;">
                     <div class="row g-0">
                         <div class="col-md-6 ">
-                            <img src="images/ai-cloud-concept-with-robot-arm.jpg" class="img-fluid rounded-start" alt="...">
+                            <img src="{% static 'images/ai-cloud-concept-with-robot-arm.jpg' %}" class="img-fluid rounded-start" alt="...">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">

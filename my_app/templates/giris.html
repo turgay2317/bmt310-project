@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,8 @@
 
 <style>
     body {
-        background-image: url("images/backgrimage02.jpg");
+        
+        background-image: url("{% static 'images/backgrimage02.jpg' %}");
         background-size: cover;
         background-position-x: center; 
         background-repeat: no-repeat;
@@ -127,7 +129,7 @@
         <div class="form-container ">
            
             <div class="custom-flex">
-                <img class="imgCustom1" src="images/logo-1.png" alt="">
+                <img class="imgCustom1" src="{% static 'images/logo-1.png' %}" alt="">
                 <nav class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active btn btn-primary" id="nav-home-tab" data-toggle="tab" data-target="#OgrenciGirisContent" type="button" role="tab" aria-controls="OgrenciGirisContent" aria-selected="true">Kullanıcı Girişi</button>
                     <button class="nav-link btn btn-primary" id="nav-profile-tab" data-toggle="tab" data-target="#EgitmenGirisContent" type="button" role="tab" aria-controls="EgitmenGirisContent" aria-selected="false">Eğitmen Girişi</button>
