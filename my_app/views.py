@@ -6,8 +6,10 @@ from django.http import HttpResponseNotFound
 
 # Create your views here.
 def index(request):
-    return HttpResponse("homepage")
+    return render(request, "index.html")
 
+def giris(request):
+    return render(request,"giris.html",{})
 
 def template_view(request, template_name):
     try:
