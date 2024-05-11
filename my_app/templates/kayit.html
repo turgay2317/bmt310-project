@@ -22,27 +22,27 @@
                     </div>
                     <div class="card-body row">
                       
-                        <form>
+                        <form method="post">
                             <div class="form-group">
                                 <label for="firstName">Ad Soyad</label>
-                                <input type="text" id="firstName" class="form-control" placeholder=" Tam adınızı girin" required>
+                                <input type="text" id="firstName" class="form-control" name="ad_soyad" placeholder=" Tam adınızı girin" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="isletmeAdi">İşletme adınız</label>
-                                <input type="text" id="isletmeAdi" class="form-control" placeholder="İşletme adınızı girin" required>
+                                <input type="text" id="isletmeAdi" class="form-control" name="isletme_adi" placeholder="İşletme adınızı girin" required>
                             </div>
                             <div class="form-group">
                                 <label for="webSitesi">Websitesi</label>
-                                <input type="url" id="webSitesi" class="form-control" placeholder="Websitesi adresinizi girin" required>
+                                <input type="url" id="webSitesi" class="form-control" name="web_sitesi" placeholder="Websitesi adresinizi girin" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">E-posta</label>
-                                <input type="email" id="email" class="form-control" placeholder="E-posta adresinizi girin" required>
+                                <input type="email" id="email" class="form-control" name="eposta" placeholder="E-posta adresinizi girin" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Şifre</label>
-                                <input type="password" id="password" class="form-control" placeholder="Şifrenizi girin" required>
+                                <input type="password" id="password" class="form-control" name="sifre" placeholder="Şifrenizi girin" required>
                                  <br>
                                 <div class="radio-group">
                                     <input type="radio" id="giris-paketi" name="paket" value="giris-paketi">
@@ -58,13 +58,13 @@
                                     <input type="radio" id="gelismis-paket" name="paket" value="gelismis-paket">
                                     <label for="gelismis-paket">Gelişmiş Yüksek Öğretim Paketi</label><br>
                                 </div>
-                                <input type="checkbox" id="myCheckbox" name="myCheckbox" value="checkboxValue">
-                                 <label for="myCheckbox">Kullanım sözleşmesini ve Gizlilik politikasını kabul ediyorum</label>
+                                <input type="checkbox" id="myCheckbox" name="sozlesme" value="checkboxValue">
+                                 <label for="myCheckbox">Kullanım sözleşmesini ve Gizlilik politikasını kabul ediyorum.</label>
 
                             </div>
-                            <a href="giris" class="btn btn-primary btn-block btn-custom">Giriş</a>
+                            <button type="submit" class="btn btn-primary btn-block btn-custom">Kayıt Olun</button>
 
-                            <p>Hesabınız var mı? <a href="giris">Giriş yapın</a></p>
+                            <p>Hesabınız var mı? <a href="giris">Giriş Yapın</a></p>
                             
                               
                             

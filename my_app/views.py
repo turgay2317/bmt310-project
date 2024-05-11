@@ -16,7 +16,19 @@ def giris(request):
     return render(request,"giris.html")
 
 def kayit(request):
+    if request.method == 'POST':
+        form = KayitFormu(request.POST)
+        if form.is_valid():
+            ad_soyad = form.cleaned_data['ad_soyad']
+            isletme_adi = form.cleaned_data['isletme_adi']
+            web_sitesi = form.cleaned_data['web_sitesi']
+            eposta = form.cleaned_data['eposta']
+            sifre = form.cleaned_data['sifre']
+            paket = form.cleaned_data['paket']
+            sozlesme = form.cleaned_data['sozlesme']
+
     return render(request, "kayit.html")
+
 
 def kurum(request):
     return render(request, "kurum/kurumAnaSayfa.html")
