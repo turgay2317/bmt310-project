@@ -1,4 +1,13 @@
-.navbar-custom {
+.container {
+    margin-top: 50px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .btn-custom {
+    width: 150px;
+  }
+  .navbar-custom {
     background-color: #2e2e70; 
   }
   .navbar-custom .navbar-brand,

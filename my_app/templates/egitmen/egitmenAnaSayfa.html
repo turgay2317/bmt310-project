@@ -9,136 +9,8 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/egitmenAnaSayfa.css' %}"> <!-- BUNU KULLAN CSS ICIN-->
 
-  <!-- Custom CSS -->
-  <style>
-<<<<<<< HEAD
-    .navbar-custom {
-      background-color: #2e2e70; 
-    }
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-text,
-    .navbar-custom .nav-link {
-      color: #ffffff; 
-    }
 
-    .navbar-custom .nav-item.active .nav-link,
-    .navbar-custom .nav-item:hover .nav-link {
-      color: #ffffff; 
-      background-color: rgba(255, 255, 255, 0.1); 
-    }
-
-    .dropdown-menu1 {
-      background-color: #f8f9fa; 
-      border: none; 
-    }
-
-    .dropdown-menu1 .dropdown-item {
-      color: #212529; 
-    }
-
-    .dropdown-menu1 .dropdown-item:hover {
-      background-color: #e9ecef; 
-    }
-
-    .container {
-      margin-top: 50px;
-    }
-    .list-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .btn-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn-custom {
-      width: 150px; 
-      height: 50px; 
-      font-size: 20px; 
-      margin-left: 20px;
-      background-color: #0056b3;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-    }
-    .btn-custom:hover {
-      background-color: #004080;
-    }
-
-    .btn-custom02 {
-      width: 100px;
-      height: 40px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-    }
-    .btn-custom02:hover {
-      opacity: 0.8;
-    }
-    .containerSize {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .list-group-item {
-      border: none;
-      background-color: #f8f9fa;
-      margin-bottom: 10px;
-      border-radius: 5px;
-    }
-    .list-group-item:hover {
-      background-color: #e9ecef;
-    }
-    .notification {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #28a745;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      display: none;
-      z-index: 9999;
-    }
-    .list-item {
-        cursor: pointer;
-    }
-    .dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1000;
-    width: 80%; 
-    height: auto; 
-    overflow-y: auto; 
-}
-    .list-item.active .dropdown-menu {
-        display: block;
-    }
-
-    .card:hover {
-    background-color: #e9ecef; 
-  }
-  .btn-custom {
-        
-       
-       background-color: #0056b3;
-        
-    }
-    .text-cstm{
-       color: #fff;
-       padding: 10px;
-       white-space: nowrap;
-    }
  
-=======
->>>>>>> refs/remotes/origin/main
-  
-  </style>
 </head>
 <body>
 
@@ -161,75 +33,201 @@
               <li><a class="dropdown-item" href="#">Profil</a></li>
               <li><a class="dropdown-item" href="#">Ayarlar</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="../giris">Çıkış yap</a></li>
+              <li><a class="dropdown-item" href="../giris.html">Çıkış yap</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div style="margin-left: 80px;">
-    <br> <br>
-    <h1>Sınıf Listesi</h1>
-    
-    <br>
-   
-    <div class=" button" >
-      <a href="egitmenSinifEkle" class="btn btn-primary btn-block btn-custom">Sınıf Ekle</a>
-    <br>
   
-  
-   </div>
-  <br><br> 
-  <div class="card" style="min-height: 100vh;">
-  
-      <div class="card-body">
-        <h5 class="card-title" style="font-size: 25px; font-weight: bold;">Fizik Sınıfı</h5>
-       
-        <p class="card-text">Sınıf bilgisi buraya gelir.</p>
-  
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown btn-custom" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sınıf içeriği
-              <button class="btn btn-info btn-custom02 btn-select" style="margin-left: 15px;">Seç</button>
-              <button class="btn btn-danger btn-custom02 btn-delete">Sil</button>
-              <a href="egitmenDosyaYukle" class="btn btn-success btn-custom02 btn-content"> İçerik Ekle</a>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <div class="container" style="width: 300px;">
-              <h5 class="dropdown-header" style="font-size: 25px; font-weight: 500;">Öğrenci Tablosu</h5>
-              <div class="row">
-                <div class="col">
-                  <a class="dropdown-item" href="#">
-                    <div class="button btn-danger btn-custom02"> 
-                      <a href="x" class=" text-cstm" >Öğrenci Sil</a>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <a class="dropdown-item" href="#">
-                <div class="button  btn-success btn-custom02 btn-content"> 
-                  <a href="x" class="text-cstm">Öğrenci Ekle</a>
-                </div>
-              </a>
-                
-              </div>
-              <hr>
-              <p class="dropdown-item-text">Öğrenci Bilgiler:</p>
-              <div class="row">
-                <div class="col">
-                  <img src="{% static 'images/turgayceylan.jpg' %}" alt="Öğrenci Fotoğrafı" style="width: 100px; height: 100px;">
-                </div>
-                <div class="col">
-                  <p>Öğrenci Adı: Turgay Ceylan</p>
-                  <p>Öğrenci No: 123456</p>
-                  <p>Doğum Tarihi: 01/01/2000</p>
-                </div>
-              </div>
-            </div>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-6">
+        <div class="card">
+          <div class="card-header" style="background-color: #0056b3">
+              <h4 class="mb-0" style="color: #fff;;">Sınıf Ekle</h4>
           </div>
+          <div class="card-body">
+              <form>
+                  <div class="form-group">
+                      <label for="firstName">Tam ad</label>
+                      <input type="text" class="form-control" id="firstName" placeholder="Sınıf adı giriniz">
+                  </div>
+                
+                  <div class="form-group">
+                      <label for="password">Sınıf ID</label>
+                      <input type="number" class="form-control" id="password" placeholder="Sınıf ID giriniz">
+                  </div>
+                  <br>
+                  <button type="submit" class="btn btn-primary btn-custom" style="margin-left: 200px;">Ekle</button>
+              </form>
+          </div>
+      </div>
     </div>
+
     
+    <div class="col-md-6 ">
+
+      <div class="table-container">  
+        <div class="card">
+          <div class="card-header" style="background-color: #0056b3">
+              <h4 class="mb-0" style="color: #fff;;">Öğrenci Ekle</h4>
+          </div>
+          <div class="card-body">
+              <form>
+                  <div class="form-group">
+                      <label for="firstName">Tam ad</label>
+                      <input type="text" class="form-control" id="firstName" placeholder="Öğrenci adı giriniz">
+                  </div>
+                
+                  <div class="form-group">
+                      <label for="password">Öğrenci ID</label>
+                      <input type="number" class="form-control" id="password" placeholder="Öğrenci ID giriniz">
+                  </div>
+                  <br>
+                  <button type="submit" class="btn btn-primary btn-custom" style="margin-left: 200px;">Ekle</button>
+              </form>
+          </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  </div>
+
+  <div class="row mt-5">
+    
+    <div class="col-md-6">     
+   
+      <table class="table  table-striped" style="color: #ffffff; ">
+        <thead>
+            <tr style="background-color: #0056b3; ">
+                <th scope="col">Sınıf Adı</th>
+                <th scope="col">Sınıf Kodu</th>
+                <th scope="col">Öğrenci Sayısı</th>
+                
+                <th scope="col">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody style="color: #0056b3;">
+            <tr>
+              <td>
+                <a href="egitmenSinifIcerigi.html">Matematik</a>
+            </td>
+                <td>MAT101</td>
+                <td>50</td>
+               
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger">Sil</button>
+                        <button type="button" class="btn btn-primary">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                 <td>
+                  <a href="egitmenSinifIcerigi.html">Fizik</a>
+              </td>
+                <td>FIZ201</td>
+                <td>45</td>
+               
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger">Sil</button>
+                        <button type="button" class="btn btn-primary">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="egitmenSinifIcerigi.html">Kimya</a>
+            </td>
+              <td>Kim202</td>
+              <td>55</td>
+             
+              <td>
+                  <div class="btn-group">
+                      <button type="button" class="btn btn-danger">Sil</button>
+                      <button type="button" class="btn btn-primary">Düzenle</button>
+                  </div>
+              </td>
+          </tr>
+           
+        </tbody>
+    </table>
+    
+
+    </div>
+    <div class="col-md-6">
+
+      
+      <table class="table  table-striped" style="color: #ffffff; ">
+        <thead>
+            <tr style="background-color: #0056b3; ">
+                <th scope="col">Öğrenci Adı</th>
+                <th scope="col">Öğrenci Numarası</th>
+                
+                
+                <th scope="col">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody style="color: #0056b3;">
+            <tr>
+                <td>Turgay Ceylan</td>
+                <td>21211101</td>
+               
+               
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger">Sil</button>
+                        <button type="button" class="btn btn-primary">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Buket Girginç</td>
+                <td>31212313</td>
+                
+               
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger">Sil</button>
+                        <button type="button" class="btn btn-primary">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+              <td>Paşa Sarızade</td>
+              <td>21221202</td>
+             
+             
+              <td>
+                  <div class="btn-group">
+                      <button type="button" class="btn btn-danger">Sil</button>
+                      <button type="button" class="btn btn-primary">Düzenle</button>
+                  </div>
+              </td>
+          </tr>
+           
+        </tbody>
+    </table>
+    </div>
+  </div>
+
+
+
+   
+    </div>
+
+
+
+
+
+
+
 	
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

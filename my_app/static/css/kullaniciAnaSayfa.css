@@ -38,6 +38,8 @@
             padding: 20px;
             margin-top: 20px;
             display: none; /* Initially hide all class content */
+                cursor: pointer;
+            
         }
 
         .video-container {

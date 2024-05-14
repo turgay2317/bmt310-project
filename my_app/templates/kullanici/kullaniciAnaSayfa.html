@@ -33,7 +33,7 @@
                             <li><a class="dropdown-item" href="#">Profil</a></li>
                             <li><a class="dropdown-item" href="#">Ayarlar</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../giris">Çıkış yap</a></li>
+                            <li><a class="dropdown-item" href="../giris.html">Çıkış yap</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -42,86 +42,19 @@
     </nav>
     <br> <br>  <br> <br>
 
-    <div class="container">
+    <div class="container"> 
         <h1 class="text-center mb-4">Sınıflar</h1>
         <ul class="list-group  listCustom">
-            <li class="list-group-item"><a href="#matematik" class="class-link text-decoration-none text-dark" onclick="showClassContent('matematik')">Matematik</a></li>
-            <li class="list-group-item"><a href="#fen" class="class-link text-decoration-none text-dark" onclick="showClassContent('fen')">Fen Bilimleri</a></li>
-            <li class="list-group-item"><a href="#biyoloji" class="class-link text-decoration-none text-dark" onclick="showClassContent('biyoloji')">Biyoloji</a></li>
-            <li class="list-group-item"><a href="#tarih" class="class-link text-decoration-none text-dark" onclick="showClassContent('tarih')">Tarih</a></li>
-            <li class="list-group-item"><a href="#kimya" class="class-link text-decoration-none text-dark" onclick="showClassContent('kimya')">Kimya</a></li>
-            <li class="list-group-item"><a href="#fizik" class="class-link text-decoration-none text-dark" onclick="showClassContent('fizik')">Fizik</a></li>
+            <li class="list-group-item"><a href="/templates/kullanici/kullaniciDers.html" class="class-link text-decoration-none text-dark " >Matematik</a></li>
+           
         </ul>
     
-        <div class="class-content mt-4" id="matematik-content">
-            <h2>Matematik İçeriği</h2>
-            <div class="container video-container" onclick="playVideo('matematikVideo')">
-                <video class="video" id="matematikVideo" controls>
-                    <source src="images/videoplayback.mp4" type="video/mp4">
-                   
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    
-        <div class="class-content mt-4" id="fen-content">
-            <h2>Fen Bilimleri İçeriği</h2>
-            <div class="container video-container" onclick="playVideo('fenVideo')">
-                <video class="video" id="fenVideo" controls>
-                    <source src="images/videoplayback.mp4" type="video/mp4">
-                    
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    
-        <div class="class-content mt-4" id="biyoloji-content">
-            <h2>Biyoloji İçeriği</h2>
-            <div class="container video-container" onclick="playVideo('biyolojiVideo')">
-                <video class="video" id="biyolojiVideo" controls>
-                    <source src="images/Chipi chipi chapa chapa cat.mp4" type="video/mp4">
-                    <!-- Fallback for browsers that don't support HTML5 video -->
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    
-        <div class="class-content mt-4" id="tarih-content">
-            <h2>Tarih İçeriği</h2>
-            <div class="container video-container" onclick="playVideo('tarihVideo')">
-                <video class="video" id="tarihVideo" controls>
-                    <source src="images/videoplayback.mp4" type="video/mp4">
-                    <!-- Fallback for browsers that don't support HTML5 video -->
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    
-        <div class="class-content mt-4" id="kimya-content">
-            <h2>Kimya İçeriği</h2>
-            <div class="container video-container" onclick="playVideo('kimyaVideo')">
-                <video class="video" id="kimyaVideo" controls>
-                    <source src="images/videoplayback.mp4" type="video/mp4">
-                    <!-- Fallback for browsers that don't support HTML5 video -->
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    
-        <div class="class-content mt-4" id="fizik-content">
-            <h2>Fizik İçeriği</h2>
-            <div class="container video-container" onclick="playVideo('fizikVideo')">
-                <video class="video" id="fizikVideo" controls>
-                    <source src="images/videoplayback.mp4" type="video/mp4">
-                    <!-- Fallback for browsers that don't support HTML5 video -->
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    
-        <!-- Diğer sınıf içerikleri buraya eklenebilir -->
-    
+       
+        
+        
+        
     </div>
+        
     
 
     <script>

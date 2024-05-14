@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sınıf içeriği</title>
+  
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/EgitmenSinifIcerigi.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+</head>
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand textGCustom" style="font-size: 35px; font-weight: bold;" href="#">Sınıf İçeriği</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          
+          <a href="egitmenAnaSayfa.html" class="btn btn-outline-success" style="margin-left: 10px; ">
+            <i class="fas fa-sign-out-alt"></i> Çıkış
+        </a>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row">
+
+    <div class="col-md-8 p-5">
+
+      <div class="container">
+        <h1 class="mb-4">Ders Video Yükle</h1>
+        <form>
+          <div class="form-group">
+            <label for="videoFile">Video Dosyası</label>
+            <input type="file" class="form-control-file" id="videoFile" accept="video/*" required>
+          </div>
+          <div class="form-group">
+            <label for="videoDescription">Açıklama</label>
+            <textarea class="form-control" id="videoDescription" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-custom">Yükle</button>
+        </form>
+      </div>
+    
+
+    </div>
+
+    <div class="col-md-4 p-5">
+      <table class="table  table-striped" style="color: #ffffff; ">
+        <thead>
+            <tr style="background-color: #0056b3; ">
+                <th scope="col">Öğrenci Adı</th>
+                <th scope="col">Öğrenci Numarası</th>
+                
+                
+                <th scope="col">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody style="color: #0056b3;">
+            <tr>
+                <td>Turgay Ceylan</td>
+                <td>21211101</td>
+               
+               
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger">Sil</button>
+                        <button type="button" class="btn btn-primary">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Buket Girginç</td>
+                <td>31212313</td>
+                
+               
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger">Sil</button>
+                        <button type="button" class="btn btn-primary">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+              <td>Paşa Sarızade</td>
+              <td>21221202</td>
+             
+             
+              <td>
+                  <div class="btn-group">
+                      <button type="button" class="btn btn-danger">Sil</button>
+                      <button type="button" class="btn btn-primary">Düzenle</button>
+                  </div>
+              </td>
+          </tr>
+           
+        </tbody>
+    </table>
+    </div>
+  </div>
+  
+
+ 
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
