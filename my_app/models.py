@@ -20,6 +20,7 @@ class Kurumlar(models.Model):
     kurumSifre = models.CharField(max_length=50)
     kurumPaket = models.ForeignKey(Paketler, on_delete=models.CASCADE)
     kurumPaketSonTarih = models.DateField()
+    kurumAktif = models.BooleanField(default=False)
 
 class Egitmenler(models.Model):
     egitmenID = models.AutoField(primary_key=True)
