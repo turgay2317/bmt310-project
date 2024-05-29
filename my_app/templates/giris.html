@@ -66,21 +66,27 @@
                     </div>
                     <div class="tab-pane fade" id="KurumGirisContent" role="tabpanel" aria-labelledby="nav-profile-tab">
                      
-                        <form>
+                        <form method="post">
+                            {% csrf_token %}
                             <div class="form-group text-center">
                                 <h3 class="text4Custom">Kurum Girişi</h3>
                             </div>
                             <div class="form-group">
                                 <label for="E-posta"> E-posta</label>
-                                <input type="email" id="E-posta" class="form-control">
+                                <input type="email" id="E-posta" name="email" class="form-control">
                             </div>
                            
                             <div class="form-group">
                                 <label for="password">Şifreniz</label>
-                                <input type="password" id="password" class="form-control">
+                                <input type="password" id="password" name="sifre" class="form-control">
                             </div>
-                            <a href="kurum" class="btn btn-primary btn-block btn-custom">Giriş</a>
+                            <button type="submit" class="btn btn-primary btn-block btn-custom">Giriş</button>
                         </form>
+                        <div>
+                        {% if hata_mesaji %}
+                            <p style="color: red;">{{ hata_mesaji }}</p>
+                        {% endif %}
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="YoneticiGirisContent" role="tabpanel" aria-labelledby="nav-profile-tab">
