@@ -15,4 +15,5 @@ urlpatterns = [
     path("egitmen",views.egitmen),
     path("egitmenDosyaYukle",views.egitmenDosyaYukle),
     path("egitmenSinifEkle",views.egitmenSinifEkle),
+    path("videoTest", views.upload_video)
 ]

@@ -8,6 +8,12 @@ from .forms import KayitFormu
 from .models import Kurumlar
 from datetime import datetime
 
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+import speech_recognition as sr
+import os
+import moviepy.editor as mp
+
 # Create your views here.
 def index(request):
     context = {
@@ -16,8 +22,28 @@ def index(request):
     return render(request, "index.html", context)
 
 def giris(request):
-    return render(request,"giris.html")
+    if request.method == 'POST':
+        # Formdan gelen verileri al
+        email = request.POST['email']
+        sifre = request.POST['sifre']
 
+        # Veritabanında kullanıcıyı bul
+        try:
+            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
+        except Kurumlar.DoesNotExist:
+            # Kullanıcı bulunamadıysa hata mesajı göster
+            return render(request, 'giris.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
+        
+        # Kullanıcı aktif değilse hata mesajı göster
+        if not kurum.kurumAktif:
+            return render(request, 'giris.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
+
+        # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
+        request.session['kurum_id'] = kurum.kurumID
+        return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+
+    return render(request, 'giris.html')
+    
 def kayit(request):
     if request.method == 'POST':
         form = KayitFormu(request.POST)
@@ -76,3 +102,32 @@ def static_view(request, path):
             return HttpResponse(f.read(), content_type='application/octet-stream')
     except FileNotFoundError:
         return HttpResponseNotFound("Static file not found")
+
+def extract_speech_text(video_path):
+    # Video dosyasını yükle
+    video = mp.VideoFileClip(video_path)
+    
+    # Videoyu WAV formatına dönüştür
+    audio_path = 'audio.wav'
+    video.audio.write_audiofile(audio_path)
+    
+    # Sesin metne çevrilmesi için tanıma motorunu başlat
+    recognizer = sr.Recognizer()
+    
+    # Sesin tanınması
+    with sr.AudioFile(audio_path) as source:
+        audio_data = recognizer.record(source)
+    
+    # Sesin metne çevrilmesi
+    try:
+        text = recognizer.recognize_google(audio_data, language='tr-TR')  # Türkçe olarak tanıma yapılacak
+        return text
+    except sr.UnknownValueError:
+        return "Ses tanınmadı"
+    except sr.RequestError as e:
+        return "Hata: {0}".format(e)
+
+def upload_video(request):
+    video_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'test.mp4')
+    text = extract_speech_text(video_path)
+    return render(request, 'result.html', {'text': text})
