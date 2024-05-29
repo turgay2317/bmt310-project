@@ -16,33 +16,33 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 <style>
      
-
    
 </style>
 <body>
     <header>
-       
         <div class="logo" >
             <img src="{% static 'images/logo-1.png' %}" alt="Logo">
         </div>
         <h3 class="text1"> YAPAY ZEKA DESTEKLİ E-ÖĞRENME SİSTEMİ</h3>
         <nav>
             <ul>
-                <li><a href="girisKullanici">Giriş Yap</a></li>
+                {% if kullanici_adi %}
+                <li><a href="#">{{ kullanici_adi }}</a></li>
+                {% else %}
+                <li><a href="{% url 'girisKullanici' %}">Giriş Yap</a></li>
+                {% endif %}
                 <li><a href="kayit">Kayıt Ol</a></li>
                 <li>
                     <div class="language">
                         <select>
                             <option value="tr">Türkçe</option>
                             <option value="en">English</option>
-                            
                         </select>
                     </div>
                 </li>
             </ul>
         </nav>
     </header>
-
   
     <div class="container" >
 		<div class="row d-flex align-items-center justify-content-center">
@@ -50,59 +50,46 @@
 				<div id="carouselExampleSlidesOnly" class="carousel slide" >
 					<div class="carousel-inner">
 						<div class="carousel-item active">
-						   
 							<div class="slider-content">
 								<div class="card">
-								
 									<div class="card-body cardCustom">
-									  <h2 class="card-title text3">MERHABA</h2>
-									 
-									  <a href="girisKullanici" class="btn btn-primary btn-custom2 corusel-text ">Giriş Yap</a>
+									    <h2 class="card-title text3">MERHABA</h2>
+									    <a href="{% url 'girisKullanici' %}" class="btn btn-primary btn-custom2 corusel-text ">Giriş Yap</a>
 									</div>
-								  </div>
+								</div>
 							</div>
 						</div>
-					
 					</div>
 				</div>
 			</div>
 		</div>
-</div>
-<hr>  <br> <br> <br>
-  <div class="column" >
-
-{%for paket in paketler %}
-
-    <div class="container containerCstm">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title containerCstm-text">{{ paket.paketAdi }}</h5>
-                        <p class="card-text containerCstm-text-info">
-                            -Maksimum {{paket.paketMaxKullanici}} kullanıcı 
-                            <br>
-                            -Yıllık {{paket.paketFiyat}} TL
-                            <br>
-                            -{{paket.paketAciklama}}
+    </div>
+    <hr>  <br> <br> <br>
+    <div class="column" >
+        {% for paket in paketler %}
+        <div class="container containerCstm">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title containerCstm-text">{{ paket.paketAdi }}</h5>
+                            <p class="card-text containerCstm-text-info">
+                                -Maksimum {{ paket.paketMaxKullanici }} kullanıcı 
+                                <br>
+                                -Yıllık {{ paket.paketFiyat }} TL
+                                <br>
+                                -{{ paket.paketAciklama }}
                             </p>
-                        <a href="kayit" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
+                            <a href="kayit" class="btn btn-primary btn-custom2 btn-text">Kayıt ol</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-    <br> 
-    {% endfor %}
-              
+        <br> 
+        {% endfor %}
+    </div>
     
-     
-    
-				</div>
-
-		
-				
-        
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
