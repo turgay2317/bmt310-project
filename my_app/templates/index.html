@@ -27,11 +27,11 @@
         <nav>
             <ul>
                 {% if kullanici_adi %}
-                <li><a href="#">{{ kullanici_adi }}</a></li>
+                <li><a href="{{ url }}">{{ kullanici_adi }}</a></li>
                 {% else %}
                 <li><a href="{% url 'girisKullanici' %}">Giriş Yap</a></li>
-                {% endif %}
                 <li><a href="kayit">Kayıt Ol</a></li>
+                {% endif %}
                 <li>
                     <div class="language">
                         <select>

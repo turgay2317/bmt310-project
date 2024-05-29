@@ -17,6 +17,18 @@ import speech_recognition as sr
 import os
 import moviepy.editor as mp
 
+def kullaniciLoginCheck(request):
+    return 'kullanici_id' in request.session
+
+def egitmenLoginCheck(request):
+    return 'egitmen_id' in request.session
+
+def yoneticiLoginCheck(request):
+    return 'yonetici_id' in request.session
+
+def kurumLoginCheck(request):
+    return 'kurum_id' in request.session
+
 # Create your views here.
 def index(request):
     context = {
@@ -24,33 +36,39 @@ def index(request):
     }
     
     kullanici_adi = None
+    url = None
     
     if 'kurum_id' in request.session:
         kurum_id = request.session['kurum_id']
+        url = "kurum"
         try:
             kullanici_adi = Kurumlar.objects.get(kurumID=kurum_id).kurumAdi
         except Kurumlar.DoesNotExist:
             pass
     elif 'egitmen_id' in request.session:
         egitmen_id = request.session['egitmen_id']
+        url = "egitmen"
         try:
             kullanici_adi = Egitmenler.objects.get(egitmenID=egitmen_id).egitmenTamAd
         except Egitmenler.DoesNotExist:
             pass
     elif 'yonetici_id' in request.session:
         yonetici_id = request.session['yonetici_id']
+        url = "yonetici"
         try:
             kullanici_adi = Yoneticiler.objects.get(yoneticiID=yonetici_id).yoneticiEmail
         except Yoneticiler.DoesNotExist:
             pass
     elif 'kullanici_id' in request.session:
         ogrenci_id = request.session['kullanici_id']
+        url = "kullanici"
         try:
             kullanici_adi = Ogrenciler.objects.get(ogrenciID=ogrenci_id).ogrenciTamAd
         except Ogrenciler.DoesNotExist:
             pass
     
     context['kullanici_adi'] = kullanici_adi
+    context['url'] = url
     
     return render(request, "index.html", context)
 
@@ -85,6 +103,7 @@ def girisEgitmen(request):
         # Formdan gelen verileri al
         email = request.POST['email']
         sifre = request.POST['sifre']
+        return redirect('/egitmen')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
         # Veritabanında kullanıcıyı bul
         try:
@@ -95,7 +114,6 @@ def girisEgitmen(request):
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
         request.session['egitmen_id'] = egitmen.egitmenID
-        return redirect('/egitmen')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
     return render(request, 'girisEgitmen.html')
 
@@ -171,18 +189,28 @@ def kayit(request):
 
 
 def kurum(request):
+    if not kurumLoginCheck(request): 
+        return redirect("/")
     return render(request, "kurum/kurumAnaSayfa.html")
 
 def kullanici(request):
+    if not kullaniciLoginCheck(request): 
+        return redirect("/")
     return render(request, "kullanici/kullaniciAnaSayfa.html")
 
 def egitmen(request):
+    if not egitmenLoginCheck(request): 
+        return redirect("/")
     return render(request, "egitmen/egitmenAnaSayfa.html")
 
 def egitmenDosyaYukle(request):
+    if not egitmenLoginCheck(request): 
+        return redirect("/")
     return render(request, "egitmen/egitmenDosyaYukle.html")
 
 def egitmenSinifEkle(request):
+    if not egitmenLoginCheck(request): 
+        return redirect("/")
     return render(request, "egitmen/egitmenSinifEkle.html")
 
 
@@ -227,3 +255,18 @@ def upload_video(request):
     video_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'test.mp4')
     text = extract_speech_text(video_path)
     return render(request, 'result.html', {'text': text})
+
+def cikis(request):
+    if 'kurum_id' in request.session:
+        del request.session['kurum_id']
+        return redirect('girisKurum')
+    elif 'egitmen_id' in request.session:
+        del request.session['egitmen_id']
+        return redirect('girisEgitmen')
+    elif 'yonetici_id' in request.session:
+        del request.session['yonetici_id']
+        return redirect('girisYonetici')
+    elif 'kullanici_id' in request.session:
+        del request.session['kullanici_id']
+        return redirect('girisKullanici')
+    
