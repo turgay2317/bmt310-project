@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/yonetici.css' %}">
+    <title>Yönetici</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand textGCustom" style="font-size: 35px; font-weight: bold;" href="#">Yönetici Ana Sayfa</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i> Yönetici
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu1" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profil</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Ayarlar</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="../giris.html"><i class="fas fa-sign-out-alt"></i> Çıkış yap</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 p-1 mb-3">
+            <table class="table table-dark table-striped" style="color: #2e2e70; width: 100%;">
+                <thead>
+                    <tr style="background-color: #0056b3;">
+                        <th scope="col">Kurum Adı</th>
+                        <th scope="col">Kurum Websitesi</th>
+                        <th scope="col">Kurum Paketi</th>
+                        <th scope="col">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kurum 1</td>
+                        <td>www.kurum1.com</td>
+                        <td>Paket A</td>
+                        <td>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-danger w-50"><i class="fas fa-trash-alt"></i> Sil</button>
+                                <button id="yonlendirmeButonu" type="button" class="btn btn-primary w-50"><i class="fas fa-edit"></i> Düzenle</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kurum 2</td>
+                        <td>www.kurum2.com</td>
+                        <td>Paket B</td>
+                        <td>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-danger w-50"><i class="fas fa-trash-alt"></i> Sil</button>
+                                <button id="yonlendirmeButonu" type="button" class="btn btn-primary w-50"><i class="fas fa-edit"></i> Düzenle</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kurum 3</td>
+                        <td>www.kurum3.com</td>
+                        <td>Paket C</td>
+                        <td>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-danger w-50"><i class="fas fa-trash-alt"></i> Sil</button>
+                                <button id="yonlendirmeButonu" type="button" class="btn btn-primary w-50"><i class="fas fa-edit"></i> Düzenle</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kurum 4</td>
+                        <td>www.kurum4.com</td>
+                        <td>Paket D</td>
+                        <td>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-danger w-50"><i class="fas fa-trash-alt"></i> Sil</button>
+                                <button id="yonlendirmeButonu" type="button" class="btn btn-primary w-50"><i class="fas fa-edit"></i> Düzenle</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4 ">
+            <div class="card-container " style="margin-left: 50px; width: 450px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title1">Yeni Kurum İstekleri</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container "style="margin-left: 50px; width: 450px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kurum 1</h5>
+                        <p class="card-text">Temel Yükseköğretim Paketi</p>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-success w-50"><i class="fas fa-check"></i> Onayla</button>
+                            <button type="button" class="btn btn-danger w-50"><i class="fas fa-trash-alt"></i> Sil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container "style="margin-left: 50px; width: 450px;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kurum 2</h5>
+                        <p class="card-text">Temel Yükseköğretim Paketi</p>
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-success w-50"><i class="fas fa-check"></i> Onayla</button>
+                            <button type="button" class="btn btn-danger w-50"><i class="fas fa-trash-alt"></i> Sil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  document.getElementById("yonlendirmeButonu").addEventListener("click", function() {
+      window.location.href = "yoneticiDuzenle.html"; // Replace "newPage.html" with the URL of the new page
+  });
+</script>
+
+<!-- jQuery (Bootstrap'in JavaScript dosyalarına bağımlıdır) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Popper.js (Bootstrap 4 için gerekli) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
