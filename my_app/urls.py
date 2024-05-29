@@ -18,5 +18,6 @@ urlpatterns = [
     path("egitmen",views.egitmen),
     path("egitmenDosyaYukle",views.egitmenDosyaYukle),
     path("egitmenSinifEkle",views.egitmenSinifEkle),
+    path("cikis", views.cikis),
     path("videoTest", views.upload_video)
 ]

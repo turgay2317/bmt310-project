@@ -6,6 +6,9 @@ from django.http import HttpResponseNotFound
 from my_app.models import Paketler
 from .forms import KayitFormu
 from .models import Kurumlar
+from .models import Egitmenler
+from .models import Ogrenciler
+from .models import Yoneticiler
 from datetime import datetime
 
 from django.shortcuts import render
@@ -14,12 +17,63 @@ import speech_recognition as sr
 import os
 import moviepy.editor as mp
 
+def kullaniciLoginCheck(request):
+    return 'kullanici_id' in request.session
+
+def egitmenLoginCheck(request):
+    return 'egitmen_id' in request.session
+
+def yoneticiLoginCheck(request):
+    return 'yonetici_id' in request.session
+
+def kurumLoginCheck(request):
+    return 'kurum_id' in request.session
+
 # Create your views here.
 def index(request):
     context = {
-        "paketler":Paketler.objects.all()
+        "paketler": Paketler.objects.all()
     }
+    
+    kullanici_adi = None
+    url = None
+    
+    if 'kurum_id' in request.session:
+        kurum_id = request.session['kurum_id']
+        url = "kurum"
+        try:
+            kullanici_adi = Kurumlar.objects.get(kurumID=kurum_id).kurumAdi
+        except Kurumlar.DoesNotExist:
+            pass
+    elif 'egitmen_id' in request.session:
+        egitmen_id = request.session['egitmen_id']
+        url = "egitmen"
+        try:
+            kullanici_adi = Egitmenler.objects.get(egitmenID=egitmen_id).egitmenTamAd
+        except Egitmenler.DoesNotExist:
+            pass
+    elif 'yonetici_id' in request.session:
+        yonetici_id = request.session['yonetici_id']
+        url = "yonetici"
+        try:
+            kullanici_adi = Yoneticiler.objects.get(yoneticiID=yonetici_id).yoneticiEmail
+        except Yoneticiler.DoesNotExist:
+            pass
+    elif 'kullanici_id' in request.session:
+        ogrenci_id = request.session['kullanici_id']
+        url = "kullanici"
+        try:
+            kullanici_adi = Ogrenciler.objects.get(ogrenciID=ogrenci_id).ogrenciTamAd
+        except Ogrenciler.DoesNotExist:
+            pass
+    
+    context['kullanici_adi'] = kullanici_adi
+    context['url'] = url
+    
     return render(request, "index.html", context)
+
+
+
 
 def girisKurum(request):
     if request.method == 'POST':
@@ -40,7 +94,7 @@ def girisKurum(request):
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
         request.session['kurum_id'] = kurum.kurumID
-        return redirect('kurum')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+        return redirect('/kurum')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
     return render(request, 'girisKurum.html')
 
@@ -49,21 +103,17 @@ def girisEgitmen(request):
         # Formdan gelen verileri al
         email = request.POST['email']
         sifre = request.POST['sifre']
+        return redirect('/egitmen')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
         # Veritabanında kullanıcıyı bul
         try:
-            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
-        except Kurumlar.DoesNotExist:
+            egitmen = Egitmenler.objects.get(egitmenEposta=email, egitmenSifre=sifre)
+        except Egitmenler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
-            return render(request, 'girisEgitmen.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
-        
-        # Kullanıcı aktif değilse hata mesajı göster
-        if not kurum.kurumAktif:
-            return render(request, 'girisEgitmen.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
+            return render(request, 'girisEgitmen.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})        
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
-        request.session['kurum_id'] = kurum.kurumID
-        return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+        request.session['egitmen_id'] = egitmen.egitmenID
 
     return render(request, 'girisEgitmen.html')
 
@@ -75,18 +125,15 @@ def girisKullanici(request):
 
         # Veritabanında kullanıcıyı bul
         try:
-            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
-        except Kurumlar.DoesNotExist:
+            kullanici = Ogrenciler.objects.get(ogrenciEposta=email, ogrenciSifre=sifre)
+        except Ogrenciler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisKullanici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
         
-        # Kullanıcı aktif değilse hata mesajı göster
-        if not kurum.kurumAktif:
-            return render(request, 'girisKullanici.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
-        request.session['kurum_id'] = kurum.kurumID
-        return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+        request.session['kullanici_id'] = kullanici.ogrenciID
+        return redirect('/kullanici')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
     return render(request, 'girisKullanici.html')
 
@@ -98,17 +145,14 @@ def girisYonetici(request):
 
         # Veritabanında kullanıcıyı bul
         try:
-            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
-        except Kurumlar.DoesNotExist:
+            yonetici = Yoneticiler.objects.get(yoneticiEmail=email, yoneticiSifre=sifre)
+        except Yoneticiler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisYonetici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
         
-        # Kullanıcı aktif değilse hata mesajı göster
-        if not kurum.kurumAktif:
-            return render(request, 'girisYonetici.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
-        request.session['kurum_id'] = kurum.kurumID
+        request.session['yonetici_id'] = yonetici.yoneticiID
         return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
     return render(request, 'girisYonetici.html')
@@ -145,18 +189,28 @@ def kayit(request):
 
 
 def kurum(request):
+    if not kurumLoginCheck(request): 
+        return redirect("/")
     return render(request, "kurum/kurumAnaSayfa.html")
 
 def kullanici(request):
+    if not kullaniciLoginCheck(request): 
+        return redirect("/")
     return render(request, "kullanici/kullaniciAnaSayfa.html")
 
 def egitmen(request):
+    if not egitmenLoginCheck(request): 
+        return redirect("/")
     return render(request, "egitmen/egitmenAnaSayfa.html")
 
 def egitmenDosyaYukle(request):
+    if not egitmenLoginCheck(request): 
+        return redirect("/")
     return render(request, "egitmen/egitmenDosyaYukle.html")
 
 def egitmenSinifEkle(request):
+    if not egitmenLoginCheck(request): 
+        return redirect("/")
     return render(request, "egitmen/egitmenSinifEkle.html")
 
 
@@ -201,3 +255,18 @@ def upload_video(request):
     video_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'test.mp4')
     text = extract_speech_text(video_path)
     return render(request, 'result.html', {'text': text})
+
+def cikis(request):
+    if 'kurum_id' in request.session:
+        del request.session['kurum_id']
+        return redirect('girisKurum')
+    elif 'egitmen_id' in request.session:
+        del request.session['egitmen_id']
+        return redirect('girisEgitmen')
+    elif 'yonetici_id' in request.session:
+        del request.session['yonetici_id']
+        return redirect('girisYonetici')
+    elif 'kullanici_id' in request.session:
+        del request.session['kullanici_id']
+        return redirect('girisKullanici')
+    
