@@ -21,7 +21,7 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-def giris(request):
+def girisKurum(request):
     if request.method == 'POST':
         # Formdan gelen verileri al
         email = request.POST['email']
@@ -32,17 +32,87 @@ def giris(request):
             kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
         except Kurumlar.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
-            return render(request, 'giris.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
+            return render(request, 'girisKurum.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
+        
+        # Kullanıcı aktif değilse hata mesajı göster
+        #if not kurum.kurumAktif:
+            return render(request, 'girisKurum.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
+
+        # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
+        request.session['kurum_id'] = kurum.kurumID
+        return redirect('kurum')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+
+    return render(request, 'girisKurum.html')
+
+def girisEgitmen(request):
+    if request.method == 'POST':
+        # Formdan gelen verileri al
+        email = request.POST['email']
+        sifre = request.POST['sifre']
+
+        # Veritabanında kullanıcıyı bul
+        try:
+            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
+        except Kurumlar.DoesNotExist:
+            # Kullanıcı bulunamadıysa hata mesajı göster
+            return render(request, 'girisEgitmen.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
         
         # Kullanıcı aktif değilse hata mesajı göster
         if not kurum.kurumAktif:
-            return render(request, 'giris.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
+            return render(request, 'girisEgitmen.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
         request.session['kurum_id'] = kurum.kurumID
         return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
-    return render(request, 'giris.html')
+    return render(request, 'girisEgitmen.html')
+
+def girisKullanici(request):
+    if request.method == 'POST':
+        # Formdan gelen verileri al
+        email = request.POST['email']
+        sifre = request.POST['sifre']
+
+        # Veritabanında kullanıcıyı bul
+        try:
+            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
+        except Kurumlar.DoesNotExist:
+            # Kullanıcı bulunamadıysa hata mesajı göster
+            return render(request, 'girisKullanici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
+        
+        # Kullanıcı aktif değilse hata mesajı göster
+        if not kurum.kurumAktif:
+            return render(request, 'girisKullanici.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
+
+        # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
+        request.session['kurum_id'] = kurum.kurumID
+        return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+
+    return render(request, 'girisKullanici.html')
+
+def girisYonetici(request):
+    if request.method == 'POST':
+        # Formdan gelen verileri al
+        email = request.POST['email']
+        sifre = request.POST['sifre']
+
+        # Veritabanında kullanıcıyı bul
+        try:
+            kurum = Kurumlar.objects.get(kurumEposta=email, kurumSifre=sifre)
+        except Kurumlar.DoesNotExist:
+            # Kullanıcı bulunamadıysa hata mesajı göster
+            return render(request, 'girisYonetici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
+        
+        # Kullanıcı aktif değilse hata mesajı göster
+        if not kurum.kurumAktif:
+            return render(request, 'girisYonetici.html', {'hata_mesaji': 'Hesabınız aktif değil.'})
+
+        # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
+        request.session['kurum_id'] = kurum.kurumID
+        return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+
+    return render(request, 'girisYonetici.html')
+
     
 def kayit(request):
     if request.method == 'POST':
@@ -65,7 +135,7 @@ def kayit(request):
                     kurumPaket=secilen_paket,
                     kurumPaketSonTarih=datetime.now().date()
                 )
-                return redirect("giris")
+                return redirect("girisKurum")
             except Paketler.DoesNotExist:
                 print("Hata")
         else:

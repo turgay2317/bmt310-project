@@ -18,17 +18,17 @@
             <div class="custom-flex" >
                 <img class="imgCustom1" src="{% static 'images/logo-1.png' %}" alt="">
                 <nav class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a href="girisKullanici" class="nav-link  btn btn-primary" id="nav-home-tab"  aria-controls="OgrenciGirisContent" aria-selected="true">Kullanıcı Girişi</a>
+                    <a href="girisKullanici" class="nav-link btn btn-primary" id="nav-home-tab"  aria-controls="OgrenciGirisContent" aria-selected="true">Kullanıcı Girişi</a>
                     <a href="girisEgitmen" class="nav-link btn btn-primary" id="nav-profile-tab" aria-controls="EgitmenGirisContent" aria-selected="false">Eğitmen Girişi</a>
-                    <a href="girisKurum" class="nav-link active btn btn-primary" id="nav-contact-tab" aria-controls="KurumGirisContent" aria-selected="false">Kurum Girişi</a>
-                    <a href="girisYonetici" class="nav-link btn btn-primary" id="nav-contact-tab"  aria-controls="YoneticiGirisContent" aria-selected="false">Yönetici Girişi</a>
+                    <a href="girisKurum" class="nav-link btn btn-primary" id="nav-contact-tab" aria-controls="KurumGirisContent" aria-selected="false">Kurum Girişi</a>
+                    <a href="girisYonetici" class="nav-link active btn btn-primary" id="nav-contact-tab"  aria-controls="YoneticiGirisContent" aria-selected="false">Yönetici Girişi</a>
                 </nav>
                 
                 <div class="container mx-auto" style="width: 70%; ">
                         <form method="post">
                             {% csrf_token %}
                             <div class="form-group text-center">
-                                <h3 class="text4Custom">Kurum Girişi</h3>
+                                <h3 class="text4Custom">Yönetici Girişi</h3>
                             </div>
                             <div class="form-group">
                                 <label for="E-posta"> E-posta</label>
