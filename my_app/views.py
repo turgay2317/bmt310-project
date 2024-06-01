@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.staticfiles import finders
 from django.http import HttpResponseNotFound
 from my_app.models import Paketler
@@ -16,6 +16,8 @@ from django.http import HttpResponseRedirect
 import speech_recognition as sr
 import os
 import moviepy.editor as mp
+from django.db import transaction
+
 
 def kullaniciLoginCheck(request):
     return 'kullanici_id' in request.session
@@ -94,6 +96,8 @@ def girisKurum(request):
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
         request.session['kurum_id'] = kurum.kurumID
+        print(request.session.get('kurum_id'))
+
         return redirect('/kurum')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
 
     return render(request, 'girisKurum.html')
@@ -269,4 +273,60 @@ def cikis(request):
     elif 'kullanici_id' in request.session:
         del request.session['kullanici_id']
         return redirect('girisKullanici')
+    
+
+
+
+def kurum_ana_sayfa(request):
+    # Kullanıcı oturum açmış mı kontrol et
+    if 'kurum_id' in request.session:
+        kurum_id = request.session['kurum_id']
+        try:
+            kurum = Kurumlar.objects.get(kurumID=kurum_id)
+            if request.method == 'POST':
+                tam_ad = request.POST.get('tam_ad')
+                email = request.POST.get('email')
+                sifre = request.POST.get('sifre')
+                if kurum_id:
+                    Egitmenler.objects.create(
+                        egitmenTamAd=tam_ad,
+                        egitmenEposta=email,
+                        egitmenSifre=sifre,
+                        egitmenKurum=kurum
+                    )
+
+            paket_bilgisi = kurum.kurumPaket
+            ogretmen_sayisi = Egitmenler.objects.filter(egitmenKurum=kurum).count()
+            ogrenci_sayisi = Ogrenciler.objects.filter(ogrenciKurum=kurum).count()
+            egitmenler = Egitmenler.objects.filter(egitmenKurum=kurum)
+            
+            context = {
+                'kurum': kurum,
+                'paket_bilgisi': paket_bilgisi,
+                'ogretmen_sayisi': ogretmen_sayisi,
+                'ogrenci_sayisi': ogrenci_sayisi,
+                'egitmenler': egitmenler,
+            }
+
+            return render(request, 'kurum/kurumAnaSayfa.html', context)
+        except Kurumlar.DoesNotExist:
+            pass
+    
+    return redirect('girisKullanici')  # Kullanıcı oturum açmamışsa giriş sayfasına yönlendir
+
+def egitmen_duzenle(request, egitmen_id):
+    egitmen = get_object_or_404(Egitmenler, egitmenID=egitmen_id)
+    if request.method == 'POST':
+        egitmen.egitmenTamAd = request.POST.get('tam_ad')
+        egitmen.egitmenEposta = request.POST.get('email')
+        egitmen.egitmenSifre = request.POST.get('sifre')
+        egitmen.save()
+        return redirect('kurum')
+    return render(request, 'kurum/egitmenDuzenle.html', {'egitmen': egitmen})
+
+def egitmen_sil(request, egitmen_id):
+    egitmen = get_object_or_404(Egitmenler, egitmenID=egitmen_id)
+    egitmen.delete()
+    return redirect('kurum')
+
     

@@ -14,20 +14,20 @@ class Paketler(models.Model):
 
 class Kurumlar(models.Model):
     kurumID = models.AutoField(primary_key=True)
-    kurumAdi = models.CharField(max_length=50)
-    kurumWebsite = models.CharField(max_length=50)
-    kurumEposta = models.CharField(max_length=50)
-    kurumSifre = models.CharField(max_length=50)
-    kurumPaket = models.ForeignKey(Paketler, on_delete=models.CASCADE)
+    kurumAdi = models.CharField(max_length=255)
+    kurumWebsite = models.CharField(max_length=255, blank=True, null=True)
+    kurumEposta = models.EmailField(unique=True)
+    kurumSifre = models.CharField(max_length=255)
+    kurumPaket = models.ForeignKey('Paketler', on_delete=models.SET_NULL, null=True)
     kurumPaketSonTarih = models.DateField()
     kurumAktif = models.BooleanField(default=False)
 
 class Egitmenler(models.Model):
     egitmenID = models.AutoField(primary_key=True)
-    egitmenTamAd = models.CharField(max_length=50)
+    egitmenTamAd = models.CharField(max_length=255)
+    egitmenEposta = models.EmailField(unique=True)
+    egitmenSifre = models.CharField(max_length=255)
     egitmenKurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
-    egitmenEposta = models.CharField(max_length=50)
-    egitmenSifre = models.CharField(max_length=50)
 
 class Ogrenciler(models.Model):
     ogrenciID = models.AutoField(primary_key=True)
