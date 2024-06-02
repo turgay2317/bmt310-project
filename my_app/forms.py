@@ -1,5 +1,6 @@
 from django import forms
 from my_app.models import Paketler, Ogrenciler, Siniflar
+from my_app.models import Video
 
 class KayitFormu(forms.Form):
     isletme_adi = forms.CharField(max_length=100)
@@ -11,5 +12,8 @@ class KayitFormu(forms.Form):
 
 class OgrenciForm(forms.ModelForm):
     class Meta:
-        model = Ogrenciler
         fields = ['ogrenciID', 'ogrenciTamAd', 'ogrenciEposta', 'ogrenciSifre'] 
+        
+class VideoForm(forms.ModelForm):
+    class Meta:
+        fields = ['title', 'video_file']
