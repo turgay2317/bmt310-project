@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.staticfiles import finders
 from django.http import HttpResponseNotFound
 from my_app.models import Paketler
@@ -9,13 +9,20 @@ from .models import Kurumlar
 from .models import Egitmenler
 from .models import Ogrenciler
 from .models import Yoneticiler
+from .models import Video
 from datetime import datetime
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 import speech_recognition as sr
 import os
 import moviepy.editor as mp
+from .forms import VideoForm
+from django.conf import settings
+
+from .models import Video
+import ffmpeg
+from faster_whisper import WhisperModel
+from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip, ColorClip
 
 def kullaniciLoginCheck(request):
     return 'kullanici_id' in request.session
@@ -227,35 +234,6 @@ def static_view(request, path):
     except FileNotFoundError:
         return HttpResponseNotFound("Static file not found")
 
-def extract_speech_text(video_path):
-    # Video dosyasını yükle
-    video = mp.VideoFileClip(video_path)
-    
-    # Videoyu WAV formatına dönüştür
-    audio_path = 'audio.wav'
-    video.audio.write_audiofile(audio_path)
-    
-    # Sesin metne çevrilmesi için tanıma motorunu başlat
-    recognizer = sr.Recognizer()
-    
-    # Sesin tanınması
-    with sr.AudioFile(audio_path) as source:
-        audio_data = recognizer.record(source)
-    
-    # Sesin metne çevrilmesi
-    try:
-        text = recognizer.recognize_google(audio_data, language='tr-TR')  # Türkçe olarak tanıma yapılacak
-        return text
-    except sr.UnknownValueError:
-        return "Ses tanınmadı"
-    except sr.RequestError as e:
-        return "Hata: {0}".format(e)
-
-def upload_video(request):
-    video_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'test.mp4')
-    text = extract_speech_text(video_path)
-    return render(request, 'result.html', {'text': text})
-
 def cikis(request):
     if 'kurum_id' in request.session:
         del request.session['kurum_id']
@@ -270,3 +248,112 @@ def cikis(request):
         del request.session['kullanici_id']
         return redirect('girisKullanici')
     
+# Video Processing
+
+#ffmpeg_path = "/opt/homebrew/bin/ffmpeg"  # Bu yolu kendi sisteminizdeki ffmpeg binary yoluna göre değiştirin
+#os.environ['PATH'] += os.pathsep + os.path.dirname(ffmpeg_path)
+#VideoFileClip.ffmpeg_binary = ffmpeg_path
+
+
+def extract_audio(video_path, audio_path):
+    try:
+        ffmpeg.input(video_path).output(audio_path, format='wav').run(overwrite_output=True, quiet=True)
+    except ffmpeg.Error as e:
+        print('stdout:', e.stdout.decode('utf8'))
+        print('stderr:', e.stderr.decode('utf8'))
+        raise e
+
+def transcribe(audio_path):
+    model = WhisperModel("small")
+    segments, info = model.transcribe(audio_path)
+    language = info[0]
+    print("Transcription language", language)
+    return segments
+
+def save_subtitles(segments, subtitle_path):
+    with open(subtitle_path, 'w', encoding='utf-8') as f:
+        for i, segment in enumerate(segments):
+            start_time = segment.start
+            end_time = segment.end
+            text = segment.text
+            f.write(f"{i+1}\n")
+            f.write(f"{format_time(start_time)} --> {format_time(end_time)}\n")
+            f.write(f"{text}\n\n")
+
+def format_time(seconds):
+    milliseconds = int((seconds % 1) * 1000)
+    seconds = int(seconds)
+    minutes = seconds // 60
+    seconds = seconds % 60
+    hours = minutes // 60
+    minutes = minutes % 60
+    return f"{hours:02}:{minutes:02}:{seconds:02},{milliseconds:03}"
+
+def add_subtitles(video_path, subtitle_path, output_path):
+    video = VideoFileClip(video_path)
+    video_width, video_height = video.size
+
+    with open(subtitle_path, 'r', encoding='utf-8') as f:
+        subtitles = f.read()
+
+    subtitle_clips = []
+    for line in subtitles.split('\n\n'):
+        if line:
+            parts = line.split('\n')
+            if len(parts) >= 3:
+                index, time, text = parts
+                start, end = time.split(' --> ')
+                start_time = parse_time(start)
+                end_time = parse_time(end)
+
+                text_clip = TextClip(text, fontsize=24, color='white', size=(video_width - 20, None), method='caption', align='center')
+                text_clip = text_clip.set_position(('center', video_height - text_clip.h - 10)).set_start(start_time).set_end(end_time)
+
+                # Black background for subtitle
+                background = ColorClip(size=(video_width, text_clip.h + 20), color=(0, 0, 0))
+                background = background.set_position(('center', video_height - background.h - 10)).set_start(start_time).set_end(end_time)
+
+                subtitle_clips.append(background)
+                subtitle_clips.append(text_clip)
+
+    result = CompositeVideoClip([video, *subtitle_clips])
+    result.write_videofile(output_path, codec='libx264', fps=video.fps)
+
+def parse_time(s):
+    h, m, s = s.split(':')
+    s, ms = s.split(',')
+    return int(h) * 3600 + int(m) * 60 + int(s) + int(ms) / 1000
+
+def process_video(video):
+    video_path = video.video_file.path
+    subtitle_path = os.path.join(settings.MEDIA_ROOT, f"subtitles/{video.id}.srt")
+    audio_path = os.path.join(settings.MEDIA_ROOT, f"extracted_audio/{video.id}.wav")
+
+    os.makedirs(os.path.dirname(subtitle_path), exist_ok=True)
+    os.makedirs(os.path.dirname(audio_path), exist_ok=True)
+
+    extract_audio(video_path, audio_path)
+
+    segments = transcribe(audio_path)
+    save_subtitles(segments, subtitle_path)
+
+    processed_video_path = os.path.join(settings.MEDIA_ROOT, f"processed_videos/{video.id}.mp4")
+    add_subtitles(video_path, subtitle_path, processed_video_path)
+
+    video.subtitle_file.name = subtitle_path
+    video.processed_video.name = processed_video_path
+    video.save()
+
+def upload_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            video = form.save()
+            try:
+                process_video(video)  # Videoyu işleme al
+                return redirect('video_detail', video_id=video.id)
+            except Exception as e:
+                return render(request, 'error.html', {'error': str(e)})
+    else:
+        form = VideoForm()
+    return render(request, 'upload_video.html', {'form': form})
