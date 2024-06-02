@@ -9,7 +9,87 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/EgitmenSinifIcerigi.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  
+  <style>
+	.site-header {
+    height:450px; /* Remove affer */
+    width:800px;/* Remove affer */
+    margin: 50px auto;
+}
+#MainMenu {
+    padding:0;
+}
+.navbar-brand {
+    padding-left:0;
+    padding-right:0;
+}
+
+/*---------- Search ----------*/
+.result-bucket li {
+    padding: 7px 15px;
+}
+.instant-results {
+    background: #fff;
+    width: 100%;
+    color: gray;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .175);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .175);
+    display: none;
+    z-index: 9;
+}
+.form-search {
+    transition: all 200ms ease-out;
+    -webkit-transition: all 200ms ease-out;
+    -ms-transition: all 200ms ease-out;
+}
+.search-form {
+    position: relative;
+    max-width: 100%;
+}
+.result-link {
+    color: #4f7593;
+}
+.result-link .media-body {
+    font-size: 13px;
+    color: gray;
+}
+.result-link .media-heading {
+    font-size: 15px;
+    font-weight: 400;
+    color: #4f7593;
+}
+.result-link:hover,
+.result-link:hover .media-heading,
+.result-link:hover .media-body {
+    text-decoration: none;
+    color: #4f7593
+}
+.result-link .media-object {
+    width: 50px;
+    padding: 3px;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+}
+.result-entry + .result-entry {
+    border-top:1px solid #ddd;
+}
+.top-keyword {
+    margin: 3px 0 0;
+    font-size: 12px;
+    font-family: Arial;
+}
+.top-keyword a {
+    font-size: 12px;
+    font-family: Arial;
+}
+.top-keyword a:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+  </style>
 </head>
 <body>
 
@@ -37,6 +117,7 @@
     <div class="col-md-8 p-5">
 
       <div class="container">
+		<a href="/egitmen" class="btn btn-sm mb-4 btn-secondary text-left">< Geri</a>
         <h1 class="mb-4">Ders Video Yükle</h1>
         <form>
           <div class="form-group">
@@ -61,19 +142,34 @@
               <h4 class="mb-0" style="color: #fff;;">Öğrenci Ekle</h4>
           </div>
           <div class="card-body">
-              <form>
-                  <div class="form-group">
-                      <label for="firstName">Tam ad</label>
-                      <input type="text" class="form-control" id="firstName" placeholder="Öğrenci adı giriniz">
-                  </div>
-                
-                  <div class="form-group">
-                      <label for="password">Öğrenci ID</label>
-                      <input type="number" class="form-control" id="password" placeholder="Öğrenci ID giriniz">
-                  </div>
-                  <br>
-                  <button type="submit" class="btn btn-primary btn-custom" style="margin-left: 200px;">Ekle</button>
-              </form>
+			<div id="search-form" class="search-form js-search-form">
+				<form class="form-search" id="myForm" role="search" action="#" method="post">
+					{% csrf_token %}
+					<div class="input-group">
+						<input type="text" class="form-control" id="searchBox" placeholder="Öğrenci Ara..." />
+						<input type="text" style="display: none;" value="-1" name="seciliOgrenciNo" id="seciliOgrenciNo"/>
+					</div>
+				</form>
+				<div class="instant-results">
+					<ul class="list-unstyled result-bucket">
+						{% for ogrenci in ogrenciler %}
+						<li class="result-entry" data-suggestion="{{ ogrenci.ogrenciTamAd }}" data-position="{{ ogrenci.ogrenciID }}" >
+							<a href="#" class="result-link">
+								<div class="media">
+									<div class="media-left">
+										<img src="https://mellon.co.tz/wp-content/uploads/2016/05/noimage.gif" class="media-object">
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">{{ ogrenci.ogrenciTamAd }}</h4>
+									</div>
+								</div>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+					
+				</div>
+			</div>
           </div>
       </div>
     </div>
@@ -81,47 +177,25 @@
       <table class="table  table-striped" style="color: #ffffff; ">
         <thead>
             <tr style="background-color: #0056b3; ">
-                <th scope="col">Öğrenci Adı</th>
-                <th scope="col">Öğrenci Numarası</th>
-                
-                
+				<th scope="col">Öğrenci Numarası</th>
+                <th scope="col">Öğrenci Adı</th>    
                 <th scope="col">İşlemler</th>
             </tr>
         </thead>
         <tbody style="color: #0056b3;">
+			{% for item in sinifOgrenciler %}
             <tr>
-                <td>Turgay Ceylan</td>
-                <td>21211101</td>
+				<td>{{ item.ogrenci.ogrenciID }}</td>
+                <td>{{ item.ogrenci.ogrenciTamAd }}</td>
                
                
                 <td>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Sil</button>
+						<a href="{% url 'egitmenSinifIcerigiSil' item.sinif.sinifID item.ogrenci.ogrenciID %}" class="btn btn-danger btn-xs">Çıkart</a>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td>Buket Girginç</td>
-                <td>31212313</td>
-                
-               
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Sil</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-              <td>Paşa Sarızade</td>
-              <td>21221202</td>
-             
-             
-              <td>
-                  <div class="btn-group">
-                      <button type="button" class="btn btn-danger">Sil</button>
-                  </div>
-              </td>
-          </tr>
+		{% endfor %}
            
         </tbody>
     </table>
@@ -132,5 +206,44 @@
  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    var searchBox = document.getElementById('searchBox');
+    var ogrenciNoBox = document.getElementById('seciliOgrenciNo');
+    var instantResults = document.querySelector('.instant-results');
+    var resultEntries = document.querySelectorAll('.result-entry');
+
+    searchBox.addEventListener('input', function() {
+        var searchTerm = this.value.toLowerCase();
+        var results = document.querySelectorAll('.result-entry');
+        results.forEach(function(result) {
+            var suggestion = result.getAttribute('data-suggestion').toLowerCase();
+            if (suggestion.includes(searchTerm)) {
+                result.style.display = 'block';
+            } else {
+                result.style.display = 'none';
+            }
+        });
+		instantResults.style.display = 'block';
+
+    });
+
+	resultEntries.forEach(function(resultEntry) {
+        resultEntry.addEventListener('click', function() {
+            // result-entry'ye tıklanınca data-position özniteliğini al
+            var position = this.getAttribute('data-position');
+			ogrenciNoBox.value = position;
+			instantResults.style.display = 'none';
+			document.getElementById('myForm').submit();
+        });
+    });
+
+    ogrenciNoBox.addEventListener('onchange', function() {
+        var selectedStudentId = this.value;
+        console.log("Seçili Öğrenci No:", selectedStudentId);
+    });
+});
+
+  </script>
 </body>
 </html>

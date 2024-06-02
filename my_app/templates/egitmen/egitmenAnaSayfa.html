@@ -124,7 +124,7 @@
           {% for sinif in siniflar %}
           <tr>
             <td> <a href='egitmenSinifIcerigi/{{sinif.sinifID}}'>{{ sinif.sinifAdi }}</a> </td>
-            <td>öğrenci sayisi</td>
+            <td>{{ sinif.ogrenciSayisi }}</td>
             <td>
               <div class="btn-group">
                 <a href="{% url 'egitmenSinifDuzenle' sinif.sinifID %}" class="btn btn-primary">Düzenle</a>

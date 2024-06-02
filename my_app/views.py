@@ -5,7 +5,7 @@ from django.contrib.staticfiles import finders
 from django.http import HttpResponseNotFound
 from my_app.models import Paketler
 from .forms import KayitFormu
-from .models import Kurumlar, Siniflar
+from .models import Kurumlar, Ogrenci_Sinif, Siniflar
 from .models import Egitmenler
 from .models import Ogrenciler
 from .models import Yoneticiler
@@ -158,15 +158,12 @@ def girisYonetici(request):
         # Veritabanında kullanıcıyı bul
         try:
             yonetici = Yoneticiler.objects.get(yoneticiEmail=email, yoneticiSifre=sifre)
+            request.session['yonetici_id'] = yonetici.yoneticiID
+            return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
         except Yoneticiler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisYonetici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
         
-
-        # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
-        request.session['yonetici_id'] = yonetici.yoneticiID
-        return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
-
     return render(request, 'girisYonetici.html')
 
     
@@ -237,10 +234,14 @@ def egitmen(request):
                 ogrenciSifre=ogr_sifre,
                 ogrenciKurum=egitmen.egitmenKurum
             )
+            
+    siniflar = Siniflar.objects.filter(sinifEgitmen=egitmen)
+    for sinif in siniflar:
+        sinif.ogrenciSayisi = Ogrenci_Sinif.objects.filter(sinif=sinif).count()
     
     context = {
         "ogrenciler": Ogrenciler.objects.filter(ogrenciKurum=egitmen.egitmenKurum),
-        "siniflar": Siniflar.objects.filter(sinifEgitmen=egitmen)
+        "siniflar": siniflar
     }
    
     return render(request, "egitmen/egitmenAnaSayfa.html",context)
@@ -363,8 +364,27 @@ def egitmen_SinifSil(request, sinif_id):
 
 def egitmenSinifIcerigi(request, sinif_id):
     sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
-   
-    return render(request, 'egitmen/egitmenSinifIcerigi.html', {'sinif': sinif})
+    ogrenciler = Ogrenciler.objects.filter()
+    sinifOgrenciler = Ogrenci_Sinif.objects.filter(sinif=sinif)
+    
+    if request.method == 'POST':
+        seciliOgrenciNo = request.POST.get('seciliOgrenciNo')
+        print("secili ogrenci no = ", seciliOgrenciNo)
+        Ogrenci_Sinif.objects.create(
+            ogrenci = Ogrenciler.objects.get(ogrenciID=seciliOgrenciNo),
+            sinif=sinif
+		)
+        
+    return render(request, 'egitmen/egitmenSinifIcerigi.html', 
+                  {'sinif': sinif, 'ogrenciler' : ogrenciler, 'sinifOgrenciler': sinifOgrenciler}
+                  )
+
+def egitmenSinifIcerigiSil(request, sinif_id,ogrenci_id):
+    ogrenci = get_object_or_404(Ogrenciler, ogrenciID = ogrenci_id)
+    ogrenciSinif = get_object_or_404(Ogrenci_Sinif, ogrenci=ogrenci)
+    ogrenciSinif.delete()
+    return redirect("egitmenSinifIcerigi",sinif_id=sinif_id)
+
 
 def egitmenSinifDuzenle(request, sinif_id):
     sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
