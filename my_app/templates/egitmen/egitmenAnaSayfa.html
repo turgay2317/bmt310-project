@@ -50,17 +50,14 @@
               <h4 class="mb-0" style="color: #fff;;">Sınıf Ekle</h4>
           </div>
           <div class="card-body">
-              <form>
+            <form method="POST">
+              {% csrf_token %}
+              
                   <div class="form-group">
-                      <label for="firstName">Tam ad</label>
-                      <input type="text" class="form-control" id="firstName" placeholder="Sınıf adı giriniz">
+                      <label for="firstName">Sınıf Adı</label>
+                      <input type="text" class="form-control" name="sinif_ad" id="firstName" placeholder="Sınıf adı giriniz">
                   </div>
                 
-                  <div class="form-group">
-                      <label for="password">Sınıf ID</label>
-                      <input type="number" class="form-control" id="password" placeholder="Sınıf ID giriniz">
-                  </div>
-                  <br>
                   <button type="submit" class="btn btn-primary btn-custom" style="margin-left: 200px;">Ekle</button>
               </form>
           </div>
@@ -76,16 +73,29 @@
               <h4 class="mb-0" style="color: #fff;;">Öğrenci Ekle</h4>
           </div>
           <div class="card-body">
-              <form>
+              <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                  <label for="password">Öğrenci ID</label>
+                  <input type="number" class="form-control" name="ogr_no" placeholder="Öğrenci numarasını giriniz">
+              </div>
+
                   <div class="form-group">
                       <label for="firstName">Tam ad</label>
-                      <input type="text" class="form-control" id="firstName" placeholder="Öğrenci adı giriniz">
+                      <input type="text" class="form-control" name="ogr_ad" id="firstName" placeholder="Öğrenci adı giriniz">
                   </div>
-                
+
                   <div class="form-group">
-                      <label for="password">Öğrenci ID</label>
-                      <input type="number" class="form-control" id="password" placeholder="Öğrenci ID giriniz">
-                  </div>
+                    <label for="firstName">Email</label>
+                    <input type="text" class="form-control" name="ogr_email" id="email" placeholder="Öğrenci emaili giriniz">
+                </div>
+
+                <div class="form-group">
+                  <label for="firstName">Şifre</label>
+                  <input type="password" class="form-control" name="ogr_sifre" id="firstName" placeholder="Öğrenci Şifresini giriniz">
+              </div>
+
                   <br>
                   <button type="submit" class="btn btn-primary btn-custom" style="margin-left: 200px;">Ekle</button>
               </form>
@@ -102,118 +112,61 @@
     
     <div class="col-md-6">     
    
-      <table class="table  table-striped" style="color: #ffffff; ">
+      <table class="table table-striped">
         <thead>
-            <tr style="background-color: #0056b3; ">
-                <th scope="col">Sınıf Adı</th>
-                <th scope="col">Sınıf Kodu</th>
-                <th scope="col">Öğrenci Sayısı</th>
-                
-                <th scope="col">İşlemler</th>
-            </tr>
-        </thead>
-        <tbody style="color: #0056b3;">
-            <tr>
-              <td>
-                <a href="egitmenSinifIcerigi.html">Matematik</a>
-            </td>
-                <td>MAT101</td>
-                <td>50</td>
-               
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Sil</button>
-                        <button id="yonlendirmeButonu2" type="button" class="btn btn-primary">Düzenle</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                 <td>
-                  <a href="egitmenSinifIcerigi.html">Fizik</a>
-              </td>
-                <td>FIZ201</td>
-                <td>45</td>
-               
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Sil</button>
-                        <button id="yonlendirmeButonu2" type="button" class="btn btn-primary">Düzenle</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-              <td>
-                <a href="egitmenSinifIcerigi.html">Kimya</a>
-            </td>
-              <td>Kim202</td>
-              <td>55</td>
-             
-              <td>
-                  <div class="btn-group">
-                      <button type="button" class="btn btn-danger">Sil</button>
-                      <button id="yonlendirmeButonu2" type="button" class="btn btn-primary">Düzenle</button>
-                    </div>
-              </td>
+          <tr style="background-color: #0056b3;">
+            <th scope="col">Sınıf Adı</th>
+            <th scope="col">Öğrenci Sayısı</th>
+            <th scope="col">İşlemler</th>
           </tr>
-           
+        </thead>
+        <tbody>
+          {% for sinif in siniflar %}
+          <tr>
+            <td> <a href='egitmenSinifIcerigi/{{sinif.sinifID}}'>{{ sinif.sinifAdi }}</a> </td>
+            <td>öğrenci sayisi</td>
+            <td>
+              <div class="btn-group">
+                <a href="{% url 'egitmenSinifDuzenle' sinif.sinifID %}" class="btn btn-primary">Düzenle</a>
+                <a href="{% url 'egitmen_SinifSil' sinif.sinifID %}" class="btn btn-danger">Sil</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
+      </table>
     
 
     </div>
     <div class="col-md-6">
 
-      
-      <table class="table  table-striped" style="color: #ffffff; ">
+      <table class="table table-striped">
         <thead>
-            <tr style="background-color: #0056b3; ">
-                <th scope="col">Öğrenci Adı</th>
-                <th scope="col">Öğrenci Numarası</th>
-                
-                
-                <th scope="col">İşlemler</th>
-            </tr>
-        </thead>
-        <tbody style="color: #0056b3;">
-            <tr>
-                <td>Turgay Ceylan</td>
-                <td>21211101</td>
-               
-               
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Sil</button>
-                        <button id="yonlendirmeButonu1" type="button" class="btn btn-primary">Düzenle</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Buket Girginç</td>
-                <td>31212313</td>
-                
-               
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Sil</button>
-                        <button id="yonlendirmeButonu1" type="button" class="btn btn-primary">Düzenle</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-              <td>Paşa Sarızade</td>
-              <td>21221202</td>
-             
-             
-              <td>
-                  <div class="btn-group">
-                      <button type="button" class="btn btn-danger">Sil</button>
-                      <button id="yonlendirmeButonu1" type="button" class="btn btn-primary">Düzenle</button>
-                    </div>
-              </td>
+          <tr style="background-color: #0056b3;">
+            <th scope="col">Öğrenci Numarası</th>
+            <th scope="col">Öğrenci Adı</th>
+            <th scope="col">Öğrenci E-Maili</th>
+            <th scope="col">Öğrenci Şifresi</th>
+            <th scope="col">İşlemler</th>
           </tr>
-           
+        </thead>
+        <tbody>
+          {% for ogrenci in ogrenciler %}
+          <tr>
+            <td>{{ ogrenci.ogrenciID }}</td>
+            <td>{{ ogrenci.ogrenciTamAd }}</td>
+            <td>{{ ogrenci.ogrenciEposta }}</td>
+            <td>{{ ogrenci.ogrenciSifre }}</td>
+            <td>
+              <div class="btn-group">
+                <a href="{% url 'egitmenOgrenciDuzenle' ogrenci.ogrenciID %}" class="btn btn-primary">Düzenle</a>
+                <a href="{% url 'egitmen_OgrenciSil' ogrenci.ogrenciID %}" class="btn btn-danger">Sil</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
+      </table>
     </div>
   </div>
 

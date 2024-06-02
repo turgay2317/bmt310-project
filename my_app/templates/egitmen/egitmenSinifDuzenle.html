@@ -33,16 +33,13 @@
     </header>
     <div class="container" style="max-width: 550px;">
         <h2 class="text-center mb-4 text-Header">Sınıf Bilgileri Güncelle</h2>
-        <form style="max-width: 500px; margin: 0 auto;">
+        <form method= "POST" style="max-width: 500px; margin: 0 auto;">
+          {% csrf_token %}
           <div class="form-group">
             <label for="institutionName">Ders Adı</label>
-            <input type="text" class="form-control" id="subjectName" placeholder="Ders Adını Girin">
+            <input type="text" class="form-control" value="{{sinif.sinifAdi}}" name="sinif_ad" id="subjectName" placeholder="Ders Adını Girin">
           </div>
-          <div class="form-group">
-            <label for="website">Ders ID</label>
-            <input type="number" class="form-control" id="number" placeholder="Ders ID Girin">
-          </div>
-          
+        
          
           <div class="btn-container">
             <button type="submit" class="btn btn-success btn-lg">Onayla</button>

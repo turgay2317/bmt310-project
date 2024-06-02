@@ -19,6 +19,11 @@ urlpatterns = [
     path("egitmen", views.egitmen),
     path("egitmenDosyaYukle", views.egitmenDosyaYukle),
     path("egitmenSinifEkle", views.egitmenSinifEkle),
+    path("egitmenOgrenciDuzenle/<int:ogrenci_id>/", views.egitmenOgrenciDuzenle, name='egitmenOgrenciDuzenle'),
+    path("egitmenSinifDuzenle/<int:sinif_id>/", views.egitmenSinifDuzenle, name='egitmenSinifDuzenle'),
+    path("egitmenSinifIcerigi/<int:sinif_id>/", views.egitmenSinifIcerigi),
+    path("egitmen_OgrenciSil/<int:ogrenci_id>/", views.egitmen_OgrenciSil, name='egitmen_OgrenciSil'),
+    path("egitmen_SinifSil/<int:sinif_id>/", views.egitmen_SinifSil, name='egitmen_SinifSil'),
     path("cikis", views.cikis, name="cikis"),
     path("videoTest", views.upload_video)
 ]

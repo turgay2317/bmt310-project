@@ -5,7 +5,7 @@ from django.contrib.staticfiles import finders
 from django.http import HttpResponseNotFound
 from my_app.models import Paketler
 from .forms import KayitFormu
-from .models import Kurumlar
+from .models import Kurumlar, Siniflar
 from .models import Egitmenler
 from .models import Ogrenciler
 from .models import Yoneticiler
@@ -107,17 +107,18 @@ def girisEgitmen(request):
         # Formdan gelen verileri al
         email = request.POST['email']
         sifre = request.POST['sifre']
-        return redirect('/egitmen')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
-
+       
         # Veritabanında kullanıcıyı bul
         try:
             egitmen = Egitmenler.objects.get(egitmenEposta=email, egitmenSifre=sifre)
+            if egitmen:
+                request.session['egitmen_id'] = egitmen.egitmenID
+                return redirect("/egitmen")
         except Egitmenler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisEgitmen.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})        
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
-        request.session['egitmen_id'] = egitmen.egitmenID
 
     return render(request, 'girisEgitmen.html')
 
@@ -130,14 +131,16 @@ def girisKullanici(request):
         # Veritabanında kullanıcıyı bul
         try:
             kullanici = Ogrenciler.objects.get(ogrenciEposta=email, ogrenciSifre=sifre)
+            if kullanici:
+                request.session['kullanici_id'] = kullanici.ogrenciID
+                return redirect('/kullanici')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
         except Ogrenciler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisKullanici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
         
 
         # Kullanıcıyı oturum (session) bilgilerine ekle ve ana sayfaya yönlendir
-        request.session['kullanici_id'] = kullanici.ogrenciID
-        return redirect('/kullanici')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+        
 
     return render(request, 'girisKullanici.html')
 
@@ -205,7 +208,37 @@ def kullanici(request):
 def egitmen(request):
     if not egitmenLoginCheck(request): 
         return redirect("/")
-    return render(request, "egitmen/egitmenAnaSayfa.html")
+
+    egitmen_id = request.session.get('egitmen_id')
+     # Kurum bilgisini öğrenciye ata
+    egitmen = Egitmenler.objects.get(egitmenID=egitmen_id)
+        
+    if request.method == 'POST':
+        if 'sinif_ad' in request.POST:
+            sinif_adi = request.POST.get('sinif_ad')
+            Siniflar.objects.create(
+                sinifAdi=sinif_adi,
+                sinifEgitmen=egitmen
+            )
+        elif 'ogr_no' in request.POST:
+            ogr_no = request.POST.get('ogr_no')
+            ogr_ad = request.POST.get('ogr_ad')
+            ogr_email = request.POST.get('ogr_email')
+            ogr_sifre = request.POST.get('ogr_sifre')
+            Ogrenciler.objects.create(
+                ogrenciID=ogr_no,
+                ogrenciTamAd=ogr_ad,
+                ogrenciEposta=ogr_email,
+                ogrenciSifre=ogr_sifre,
+                ogrenciKurum=egitmen.egitmenKurum
+            )
+    
+    context = {
+        "ogrenciler": Ogrenciler.objects.filter(ogrenciKurum=egitmen.egitmenKurum),
+        "siniflar": Siniflar.objects.filter(sinifEgitmen=egitmen)
+    }
+   
+    return render(request, "egitmen/egitmenAnaSayfa.html",context)
 
 def egitmenDosyaYukle(request):
     if not egitmenLoginCheck(request): 
@@ -216,6 +249,8 @@ def egitmenSinifEkle(request):
     if not egitmenLoginCheck(request): 
         return redirect("/")
     return render(request, "egitmen/egitmenSinifEkle.html")
+
+
 
 
 def template_view(request, template_name):
@@ -324,9 +359,43 @@ def egitmen_duzenle(request, egitmen_id):
         return redirect('kurum')
     return render(request, 'kurum/egitmenDuzenle.html', {'egitmen': egitmen})
 
+def egitmenOgrenciDuzenle(request, ogrenci_id):
+    ogrenci = get_object_or_404(Ogrenciler, ogrenciID=ogrenci_id)
+    if request.method == 'POST':
+        ogrenci.ogrenciID = request.POST.get('ogr_no')
+        ogrenci.ogrenciTamAd = request.POST.get('ogr_ad')
+        ogrenci.ogrenciEposta = request.POST.get('ogr_email')
+        ogrenci.ogrenciSifre = request.POST.get('ogr_sifre')
+        ogrenci.save()
+        return redirect('/egitmen')
+    return render(request, 'egitmen/egitmenOgrenciDuzenle.html', {'ogrenci': ogrenci})
+
 def egitmen_sil(request, egitmen_id):
     egitmen = get_object_or_404(Egitmenler, egitmenID=egitmen_id)
     egitmen.delete()
     return redirect('kurum')
+
+def egitmen_OgrenciSil(request, ogrenci_id):
+    ogrenci = get_object_or_404(Ogrenciler, ogrenciID=ogrenci_id)
+    ogrenci.delete()
+    return redirect("/egitmen")
+
+def egitmen_SinifSil(request, sinif_id):
+    sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
+    sinif.delete()
+    return redirect("/egitmen")
+
+def egitmenSinifIcerigi(request, sinif_id):
+    sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
+   
+    return render(request, 'egitmen/egitmenSinifIcerigi.html', {'sinif': sinif})
+
+def egitmenSinifDuzenle(request, sinif_id):
+    sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
+    if request.method == 'POST':
+        sinif.sinifAdi = request.POST.get('sinif_ad')
+        sinif.save()
+        return redirect('/egitmen')
+    return render(request, 'egitmen/egitmenSinifDuzenle.html', {'sinif': sinif})
 
     
