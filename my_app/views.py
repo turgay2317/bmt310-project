@@ -351,7 +351,6 @@ def egitmen_sil(request, egitmen_id):
     egitmen.delete()
     return redirect('kurum')
 
-<<<<<<< HEAD
 def egitmen_OgrenciSil(request, ogrenci_id):
     ogrenci = get_object_or_404(Ogrenciler, ogrenciID=ogrenci_id)
     ogrenci.delete()
@@ -376,7 +375,6 @@ def egitmenSinifDuzenle(request, sinif_id):
     return render(request, 'egitmen/egitmenSinifDuzenle.html', {'sinif': sinif})
 
     
-=======
     
 # Video Processing
 
@@ -487,4 +485,3 @@ def upload_video(request):
     else:
         form = VideoForm()
     return render(request, 'upload_video.html', {'form': form})
->>>>>>> 79a822fca29dcf685b6adb151ca520fb9daae0fa
