@@ -15,13 +15,9 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
         <div class="container-fluid navbar-custom">
-            <a class="navbar-brand" href="#">Haftalar</a>
+            <a class="navbar-brand" href="#">{{ sinif.sinifAdi }}</a>
     
-            <form class="d-flex" style="margin-right: 100px;">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Ara</button>
-                <a href="kullaniciAnaSayfa.html" class="btn btn-outline-success " style="margin-left:10px;margin-right:  200px;">Çıkış</a>
-            </form>
+                <a href="http://127.0.0.1:8000/cikis" class="btn btn-secondary " style="margin-left:10px;margin-right:  200px;">Çıkış</a>
     
           
         </div>
@@ -32,24 +28,26 @@
 
          <div class="row">
             <div class="col-md-8">
-
+				<a href="/kullanici" class="btn btn-sm mb-4 btn-secondary text-left">< Geri</a>
+				{% for hafta in haftalar %}
+				<a href="{% url 'kullaniciSinifIcerik' hafta.icerikID %}" class="btn d-block">
                 <div class="card" id="card-link">
-                
-                    <h5 class="card-header"><i class="fas fa-book"></i> 1-HAFTA</h5>
+                    <h5 class="card-header"><i class="fas fa-book"></i> #{{ hafta.icerikID }}</h5>
                     <div class="card-body">
-                      <h5 class="card-title">Matematik</h5>
-                      <p class="card-text">10.05.2024</p>
+                      <h5 class="card-title">{{ hafta.icerikAdi }}</h5>
                     </div>
-                  </div>
+                </div>
+				</a>
+				{% endfor %}
+
             </div>
             <div class="col-md-4">
                 <div class="card" id="card-link">
                     <h5 class="card-header">Eğitmen Bilgileri</h5>
                    
                     <div class="card-body">
-                        <img src="{% static 'images/sinanToklu.jpeg' %}" width="150px" height="150px" class="rounded-circle" alt="Eğitmen Fotoğrafı">
-                      <h5 class="card-title">Sinan TOKLU</h5>
-                      <p class="card-text">Doçent(mesela)</p>
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" width="150px" height="150px" class="rounded-circle" alt="Eğitmen Fotoğrafı">
+                      <h5 class="card-title">{{ sinif.sinifEgitmen.egitmenTamAd }}</h5>
                     </div>
                   </div>
 
@@ -63,11 +61,4 @@
  
    
 </body>
-
-
-<script>
-    document.getElementById('card-link').addEventListener('click', function() {
-        window.location.href = '/templates/kullanici/kullaniciDersIcerigi.html'; // Yönlendirilecek sayfanın yolu
-    });
-</script>
 </html>

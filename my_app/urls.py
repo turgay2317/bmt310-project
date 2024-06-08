@@ -1,6 +1,7 @@
+from django.conf import settings
 from django.urls import path
 from . import views
-from django.views.generic import TemplateView
+from django.views.static import serve
 
 urlpatterns = [
     path("", views.index),
@@ -23,9 +24,11 @@ urlpatterns = [
     path("egitmenSinifDuzenle/<int:sinif_id>/", views.egitmenSinifDuzenle, name='egitmenSinifDuzenle'),
 	path("egitmen_OgrenciSil/<int:ogrenci_id>/", views.egitmen_OgrenciSil, name='egitmen_OgrenciSil'),
     path("egitmenSinifIcerigi/<int:sinif_id>/", views.egitmenSinifIcerigi, name="egitmenSinifIcerigi"),
+	path("kullaniciSinif/<int:sinif_id>/", views.kullaniciSinif, name="kullaniciSinif"),
+	path("kullaniciSinifIcerik/<int:icerik_id>/", views.kullaniciSinifIcerik, name="kullaniciSinifIcerik"),
 	path("egitmenSinifIcerigiSil/<int:ogrenci_id>/", views.egitmenSinifIcerigiSil, name="egitmenSinifIcerigiSil"),
 	path("egitmenSinifIcerigiSil/<int:sinif_id>/<int:ogrenci_id>/", views.egitmenSinifIcerigiSil, name='egitmenSinifIcerigiSil'),
+	path("egitmenSinifIcerikSil/<int:sinif_id>/<int:icerik_id>/", views.egitmenSinifIcerikSil, name='egitmenSinifIcerikSil'),
     path("egitmen_SinifSil/<int:sinif_id>/", views.egitmen_SinifSil, name='egitmen_SinifSil'),
     path("cikis", views.cikis, name="cikis"),
-	path('upload/', views.upload_video, name='upload_video'),
 ]
