@@ -10,7 +10,7 @@ from .models import Egitmenler
 from .models import Ogrenciler
 from .models import Yoneticiler
 from .models import Video
-from datetime import datetime
+from datetime import datetime, timedelta
 from transformers import pipeline
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -160,7 +160,7 @@ def girisYonetici(request):
         try:
             yonetici = Yoneticiler.objects.get(yoneticiEmail=email, yoneticiSifre=sifre)
             request.session['yonetici_id'] = yonetici.yoneticiID
-            return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+            return redirect('yonetici')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
         except Yoneticiler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisYonetici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
@@ -202,6 +202,41 @@ def kurum(request):
     if not kurumLoginCheck(request): 
         return redirect("/")
     return render(request, "kurum/kurumAnaSayfa.html")
+
+def yonetici(request):	
+    if not yoneticiLoginCheck(request): 
+        return redirect("/")
+    onaylananKurumlar = Kurumlar.objects.filter(kurumAktif=True)
+    onayBekleyenKurumlar = Kurumlar.objects.filter(kurumAktif=False)
+    context = {
+        'onaylanan': onaylananKurumlar,
+        'bekleyen' : onayBekleyenKurumlar
+	}
+    return render(request, "yonetici/yonetici.html", context)
+
+def yoneticiOnayla(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.kurumAktif = True
+    kurum.save()
+    return redirect("/yonetici")
+    
+def yoneticiReddet(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.delete()
+    return redirect("/yonetici")
+
+    
+def yoneticiUzat(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.kurumPaketSonTarih += timedelta(days=365)
+    kurum.save()
+    return redirect("/yonetici")
+
+def yoneticiBitir(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.kurumPaketSonTarih = datetime.now() - timedelta(days=1)
+    kurum.save()
+    return redirect("/yonetici")
 
 def kullanici(request):
     if not kullaniciLoginCheck(request): 
