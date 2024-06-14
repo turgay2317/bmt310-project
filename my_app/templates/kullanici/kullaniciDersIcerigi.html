@@ -16,7 +16,7 @@
     
             <form class="d-flex" style="margin-right: 100px;">
                
-                <a href="kullaniciAnaSayfa.html" class="btn btn-outline-success" style="margin-left: 10px; margin-right: 200px;">
+                <a href="http://127.0.0.1:8000/cikis" class="btn btn-outline-success" style="margin-left: 10px; margin-right: 200px;">
                     <i class="fas fa-sign-out-alt"></i> Çıkış
                 </a>
                 
@@ -25,28 +25,49 @@
           
         </div>
     </nav>
-   
+
      <div class="row">
 
         <div class="col-md-8 p-5" >
+			<a href="/kullaniciSinif/{{ icerik.sinif.sinifID }}" class="btn btn-sm mb-4 btn-secondary text-left">< Geri</a>
 
-                <h2>Ders Videosu-X</h2>
-                <video controls class=" w-100">
-                    <source src="path_to_your_video.mp4" type="video/mp4">
-                    
-                    Tarayıcınız video oynatma özelliğini desteklemiyor.
-                </video>
+                <h2>{{ icerik.icerikAdi }}</h2>
+                <video controls style="height:400px; width:100%;">
+					<source src="/static{{ icerik.icerikVideo.processed_video.url|cut:'my_app/static' }}" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
         </div>
 
         <div class="col-md-4 p-5">
             <h3 >Transkript</h3>
-            <textarea class="form-control fs-4" style="min-height: 400px;" readonly>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam feugiat risus vel purus lacinia, ut sodales odio elementum. Pellentesque nec dui enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas placerat nisi nec purus placerat, vel consectetur ex efficitur. Cras non massa dolor. Duis non tortor non nunc sagittis ultricies id ut nulla. Sed sed magna at ipsum gravida rhoncus sit amet vitae ex. Quisque bibendum ligula id sapien pulvinar fermentum.
-            </textarea>
+            <textarea class="form-control fs-4" style="min-height: 400px;" readonly>{{icerik.icerikTranskript}}</textarea>
         </div>
         
         
      </div>
+	 
+	 <div class="row">
+		<div class="col-md-4 p-5">
+			<h4>Giriş Seviye Özet</h4>
+			<p>
+				{{ icerik.icerikOzetKolay }}
+			</p>
+		</div>
+
+		<div class="col-md-4 p-5">
+			<h4>Orta Seviye Özet</h4>
+			<p>
+				{{ icerik.icerikOzetOrta }}
+			</p>
+		</div>
+
+		<div class="col-md-4 p-5">
+			<h4>İleri Seviye Özet</h4>
+			<p>
+				{{ icerik.icerikOzetZor }}
+			</p>
+		</div>
+	 </div>
     
     
     

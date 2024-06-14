@@ -30,9 +30,6 @@
                            Kullanıcı
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Profil</a></li>
-                            <li><a class="dropdown-item" href="#">Ayarlar</a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="cikis">Çıkış yap</a></li>
                         </ul>
                     </li>
@@ -45,8 +42,9 @@
     <div class="container"> 
         <h1 class="text-center mb-4">Sınıflar</h1>
         <ul class="list-group  listCustom">
-            <li class="list-group-item"><a href="/templates/kullanici/kullaniciDers.html" class="class-link text-decoration-none text-dark " >Matematik</a></li>
-           
+			{% for ogrenciSinif in siniflar %}
+            <li class="list-group-item"><a href="{% url 'kullaniciSinif' ogrenciSinif.sinif.sinifID %}" class="class-link text-decoration-none text-dark " >{{ogrenciSinif.sinif.sinifAdi}}</a></li>
+			{% endfor %}
         </ul>
     
        

@@ -5,12 +5,13 @@ from django.contrib.staticfiles import finders
 from django.http import HttpResponseNotFound
 from my_app.models import Paketler
 from .forms import KayitFormu
-from .models import Kurumlar, Ogrenci_Sinif, Siniflar
+from .models import Icerikler, Kurumlar, Ogrenci_Sinif, Siniflar
 from .models import Egitmenler
 from .models import Ogrenciler
 from .models import Yoneticiler
 from .models import Video
-from datetime import datetime
+from datetime import datetime, timedelta
+from transformers import pipeline
 
 from django.shortcuts import render, get_object_or_404, redirect
 import speech_recognition as sr
@@ -159,7 +160,7 @@ def girisYonetici(request):
         try:
             yonetici = Yoneticiler.objects.get(yoneticiEmail=email, yoneticiSifre=sifre)
             request.session['yonetici_id'] = yonetici.yoneticiID
-            return redirect('anasayfa')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
+            return redirect('yonetici')  # 'anasayfa' isimli URL'ye yönlendirme yapılmalı
         except Yoneticiler.DoesNotExist:
             # Kullanıcı bulunamadıysa hata mesajı göster
             return render(request, 'girisYonetici.html', {'hata_mesaji': 'E-posta veya şifre yanlış.'})
@@ -202,10 +203,48 @@ def kurum(request):
         return redirect("/")
     return render(request, "kurum/kurumAnaSayfa.html")
 
+def yonetici(request):	
+    if not yoneticiLoginCheck(request): 
+        return redirect("/")
+    onaylananKurumlar = Kurumlar.objects.filter(kurumAktif=True)
+    onayBekleyenKurumlar = Kurumlar.objects.filter(kurumAktif=False)
+    context = {
+        'onaylanan': onaylananKurumlar,
+        'bekleyen' : onayBekleyenKurumlar
+	}
+    return render(request, "yonetici/yonetici.html", context)
+
+def yoneticiOnayla(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.kurumAktif = True
+    kurum.save()
+    return redirect("/yonetici")
+    
+def yoneticiReddet(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.delete()
+    return redirect("/yonetici")
+
+    
+def yoneticiUzat(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.kurumPaketSonTarih += timedelta(days=365)
+    kurum.save()
+    return redirect("/yonetici")
+
+def yoneticiBitir(request, kurum_id):
+    kurum = Kurumlar.objects.get(kurumID=kurum_id)
+    kurum.kurumPaketSonTarih = datetime.now() - timedelta(days=1)
+    kurum.save()
+    return redirect("/yonetici")
+
 def kullanici(request):
     if not kullaniciLoginCheck(request): 
         return redirect("/")
-    return render(request, "kullanici/kullaniciAnaSayfa.html")
+    ogrenci_id = request.session.get('kullanici_id')
+    ogrenci = Ogrenciler.objects.get(ogrenciID=ogrenci_id)
+    siniflar = Ogrenci_Sinif.objects.filter(ogrenci=ogrenci)
+    return render(request, "kullanici/kullaniciAnaSayfa.html", {'siniflar': siniflar})
 
 def egitmen(request):
     if not egitmenLoginCheck(request): 
@@ -364,20 +403,62 @@ def egitmen_SinifSil(request, sinif_id):
 
 def egitmenSinifIcerigi(request, sinif_id):
     sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
+    icerikler = Icerikler.objects.filter(sinif=sinif)
     ogrenciler = Ogrenciler.objects.filter()
     sinifOgrenciler = Ogrenci_Sinif.objects.filter(sinif=sinif)
-    
     if request.method == 'POST':
-        seciliOgrenciNo = request.POST.get('seciliOgrenciNo')
-        print("secili ogrenci no = ", seciliOgrenciNo)
-        Ogrenci_Sinif.objects.create(
-            ogrenci = Ogrenciler.objects.get(ogrenciID=seciliOgrenciNo),
-            sinif=sinif
-		)
-        
+        frm = request.POST.get('frm')
+        if not frm:
+            print("ogr ekle")
+            seciliOgrenciNo = request.POST.get('seciliOgrenciNo')
+            Ogrenci_Sinif.objects.create(
+                ogrenci = Ogrenciler.objects.get(ogrenciID=seciliOgrenciNo),
+                sinif=sinif
+            )
+        else:
+            form = VideoForm(request.POST, request.FILES)
+            if form.is_valid():
+                video = form.save()
+                try:
+                    process_video(video)
+                    transkript = video.process_subtitles()
+                    Icerikler.objects.create(
+                        icerikAdi=video.title,
+                        sinif=sinif,
+                        icerikVideo=video,
+                        icerikTranskript=transkript,
+                        icerikOzetKolay=simple_summarization(transkript),
+                        icerikOzetOrta=medium_summarization(transkript),
+                        icerikOzetZor=advanced_summarization(transkript)
+					)
+                except Exception as e:
+                    print("error")
+    form = VideoForm()
+
     return render(request, 'egitmen/egitmenSinifIcerigi.html', 
-                  {'sinif': sinif, 'ogrenciler' : ogrenciler, 'sinifOgrenciler': sinifOgrenciler}
+                  {
+                      'sinif': sinif, 
+                      'ogrenciler' : ogrenciler, 
+                      'sinifOgrenciler': sinifOgrenciler,
+                      'icerikler': icerikler,
+                      'form': form
+                }
                   )
+
+def kullaniciSinif(request, sinif_id):
+    sinif = Siniflar.objects.get(sinifID=sinif_id)
+    haftalar = Icerikler.objects.filter(sinif=sinif)
+    return render(request, "kullanici/kullaniciDers.html", {
+        'sinif': sinif,
+        'haftalar': haftalar
+	})
+
+def kullaniciSinifIcerik(request, icerik_id):
+    icerik = Icerikler.objects.get(icerikID=icerik_id)
+	
+    return render(request, "kullanici/kullaniciDersIcerigi.html", {
+        'icerik': icerik,
+	})
 
 def egitmenSinifIcerigiSil(request, sinif_id,ogrenci_id):
     ogrenci = get_object_or_404(Ogrenciler, ogrenciID = ogrenci_id)
@@ -385,6 +466,10 @@ def egitmenSinifIcerigiSil(request, sinif_id,ogrenci_id):
     ogrenciSinif.delete()
     return redirect("egitmenSinifIcerigi",sinif_id=sinif_id)
 
+def egitmenSinifIcerikSil(request, sinif_id,icerik_id):
+    icerik = get_object_or_404(Icerikler, icerikID=icerik_id)
+    icerik.delete()
+    return redirect("egitmenSinifIcerigi",sinif_id=sinif_id)
 
 def egitmenSinifDuzenle(request, sinif_id):
     sinif = get_object_or_404(Siniflar, sinifID=sinif_id)
@@ -454,7 +539,7 @@ def add_subtitles(video_path, subtitle_path, output_path):
                 start_time = parse_time(start)
                 end_time = parse_time(end)
 
-                text_clip = TextClip(text, fontsize=24, color='white', size=(video_width - 20, None), method='caption', align='center')
+                text_clip = TextClip(text, fontsize=40, color='white', size=(video_width - 20, None), method='caption', align='center')
                 text_clip = text_clip.set_position(('center', video_height - text_clip.h - 10)).set_start(start_time).set_end(end_time)
 
                 # Black background for subtitle
@@ -465,7 +550,12 @@ def add_subtitles(video_path, subtitle_path, output_path):
                 subtitle_clips.append(text_clip)
 
     result = CompositeVideoClip([video, *subtitle_clips])
-    result.write_videofile(output_path, codec='libx264', fps=video.fps)
+    result.write_videofile(output_path, 
+	codec='libx264', 
+	audio_codec='aac', 
+	temp_audiofile='temp-audio.m4a', 
+	remove_temp=True
+)
 
 def parse_time(s):
     h, m, s = s.split(':')
@@ -474,8 +564,8 @@ def parse_time(s):
 
 def process_video(video):
     video_path = video.video_file.path
-    subtitle_path = os.path.join(settings.MEDIA_ROOT, f"subtitles/{video.id}.srt")
-    audio_path = os.path.join(settings.MEDIA_ROOT, f"extracted_audio/{video.id}.wav")
+    subtitle_path = os.path.join(settings.MEDIA_ROOT, f"my_app/static/subtitles/{video.id}.srt")
+    audio_path = os.path.join(settings.MEDIA_ROOT, f"my_app/static/extracted_audio/{video.id}.wav")
 
     os.makedirs(os.path.dirname(subtitle_path), exist_ok=True)
     os.makedirs(os.path.dirname(audio_path), exist_ok=True)
@@ -485,23 +575,28 @@ def process_video(video):
     segments = transcribe(audio_path)
     save_subtitles(segments, subtitle_path)
 
-    processed_video_path = os.path.join(settings.MEDIA_ROOT, f"processed_videos/{video.id}.mp4")
+    processed_video_path = os.path.join(settings.MEDIA_ROOT, f"my_app/static/processed_videos/{video.id}.mp4")
+    os.makedirs(os.path.dirname(processed_video_path), exist_ok=True)
     add_subtitles(video_path, subtitle_path, processed_video_path)
 
     video.subtitle_file.name = subtitle_path
     video.processed_video.name = processed_video_path
     video.save()
 
-def upload_video(request):
-    if request.method == 'POST':
-        form = VideoForm(request.POST, request.FILES)
-        if form.is_valid():
-            video = form.save()
-            try:
-                process_video(video)  # Videoyu işleme al
-                return redirect('video_detail', video_id=video.id)
-            except Exception as e:
-                return render(request, 'error.html', {'error': str(e)})
-    else:
-        form = VideoForm()
-    return render(request, 'upload_video.html', {'form': form})
+# Basit metin özetleme
+def simple_summarization(text):
+    summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6", revision="a4f8f3e")
+    summary = summarizer(text, max_length=50, min_length=20, do_sample=False)
+    return summary[0]['summary_text']
+
+# Orta düzey metin özetleme
+def medium_summarization(text):
+    summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6", revision="a4f8f3e")
+    summary = summarizer(text, max_length=150, min_length=30, do_sample=False)
+    return summary[0]['summary_text']
+
+# Zor metin özetleme
+def advanced_summarization(text):
+    summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6", revision="a4f8f3e")
+    summary = summarizer(text, max_length=200, min_length=50, do_sample=False)
+    return summary[0]['summary_text']
